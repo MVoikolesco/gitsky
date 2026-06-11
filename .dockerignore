@@ -1,0 +1,12 @@
+.git
+.agents
+.codex
+node_modules
+packages/*/node_modules
+.pnpm-store
+dist
+packages/*/dist
+.rsbuild
+coverage
+*.log
+.DS_Store

@@ -1,0 +1,22 @@
+{
+  "name": "multi-git-skyline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:app": "pnpm --filter @multi-git-skyline/app dev",
+    "dev:api": "pnpm --filter @multi-git-skyline/api dev",
+    "build": "pnpm -r build",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "typescript": "^6.0.3"
+  }
+}
