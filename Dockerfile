@@ -1,18 +1,18 @@
-FROM node:24-alpine
-
-WORKDIR /workspace
-
-RUN corepack enable pnpm
+FROM node:22.14.0-alpine
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
-COPY packages/app/package.json ./packages/app/package.json
-COPY packages/api/package.json ./packages/api/package.json
+WORKDIR /app
 
-RUN pnpm install
+RUN corepack enable
+
+COPY package.json pnpm-lock.yaml .npmrc ./
+
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-CMD ["pnpm", "dev"]
+EXPOSE 3000
+
+CMD ["pnpm", "run", "dev"]

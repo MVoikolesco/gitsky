@@ -2,40 +2,12 @@ services:
   app:
     build:
       context: .
-    working_dir: /workspace
-    command: sh -c "pnpm install && pnpm dev:app"
     environment:
-      NODE_ENV: development
+      PUBLIC_APP_NAME: Git Contribuitions Sky
+      PUBLIC_USE_MOCKS: "true"
     ports:
       - "3000:3000"
     volumes:
-      - .:/workspace
-      - pnpm-store:/pnpm/store
-      - app-root-node-modules:/workspace/node_modules
-      - app-node-modules:/workspace/packages/app/node_modules
-    depends_on:
-      - api
-
-  api:
-    build:
-      context: .
-    working_dir: /workspace
-    command: sh -c "pnpm install && pnpm dev:api"
-    environment:
-      NODE_ENV: development
-      PORT: 8787
-      HOST: 0.0.0.0
-    ports:
-      - "8787:8787"
-    volumes:
-      - .:/workspace
-      - pnpm-store:/pnpm/store
-      - api-root-node-modules:/workspace/node_modules
-      - api-node-modules:/workspace/packages/api/node_modules
-
-volumes:
-  pnpm-store:
-  app-root-node-modules:
-  api-root-node-modules:
-  app-node-modules:
-  api-node-modules:
+      - .:/app
+      - /app/node_modules
+    command: sh -c "pnpm run build && pnpm run preview"
