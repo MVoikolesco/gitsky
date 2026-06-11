@@ -1,0 +1,27 @@
+{
+	"compilerOptions": {
+		"allowImportingTsExtensions": true,
+		"composite": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"lib": ["DOM", "ES2022"],
+		"module": "ESNext",
+		"moduleDetection": "force",
+		"moduleResolution": "bundler",
+		"noEmit": true,
+		"plugins": [
+			{
+				"name": "gql.tada/ts-plugin",
+				"schema": "./node_modules/@octokit/graphql-schema/schema.graphql",
+				"tadaOutputLocation": "./src/api/graphql-env.d.ts"
+			}
+		],
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "ES2022",
+		"useDefineForClassFields": true
+	},
+	"include": ["src", "vite.config.ts"]
+}

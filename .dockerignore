@@ -1,12 +1,6 @@
-.git
-.agents
-.codex
 node_modules
-packages/*/node_modules
-.pnpm-store
 dist
-packages/*/dist
-.rsbuild
-coverage
-*.log
+.git
 .DS_Store
+npm-debug.log
+pnpm-debug.log
