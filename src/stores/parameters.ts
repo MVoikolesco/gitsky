@@ -96,7 +96,7 @@ export const getComputedParameters = (
 };
 
 export const DEFAULT_INPUT_PARAMETERS = Object.freeze({
-	name: "battlesquid",
+	name: "mvoikolesco",
 	nameOverride: "",
 	startYear: new Date().getFullYear(),
 	endYear: new Date().getFullYear(),

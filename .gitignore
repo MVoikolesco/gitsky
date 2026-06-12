@@ -1,6 +1,5 @@
 node_modules
 .pnpm-store
-gh-skyline-master/
 dist
 packages/*/dist
 .rsbuild
