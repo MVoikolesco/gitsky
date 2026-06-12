@@ -123,7 +123,7 @@ export function Sidebar(props: SidebarProps) {
 			<AppShell.Section>
 				<Button
 					component="a"
-					href="https://github.com/battlesquid/gh-skyline"
+					href="https://github.com/MVoikolesco/gitsky"
 					target="_blank"
 					size="xs"
 					variant="default"
