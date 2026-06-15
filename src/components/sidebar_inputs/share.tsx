@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { IconCheck, IconCopy, IconShare2 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { buildShareLinks } from "../../share/urlShare";
 import { useParametersContext } from "../../stores/parameters";
 
@@ -24,6 +25,7 @@ export function ShareButton({
 	compact = false,
 	popoverPosition = "top",
 }: ShareButtonProps) {
+	const { t } = useTranslation();
 	const [opened, setOpened] = useState(false);
 	const inputs = useParametersContext((s) => s.inputs);
 	const [minimal, setMinimal] = useState<string>("");
@@ -49,11 +51,11 @@ export function ShareButton({
 					variant="light"
 					onClick={() => setOpened((v) => !v)}
 					leftSection={<IconShare2 size={16} />}
-					aria-label="Share"
+					aria-label={t("actions.share")}
 				>
 					{!compact && (
 						<Text className="mona-sans-wide" tt="uppercase" fw={900} size="xs">
-							Share
+							{t("actions.share")}
 						</Text>
 					)}
 				</Button>
@@ -61,15 +63,18 @@ export function ShareButton({
 			<Popover.Dropdown>
 				<Stack gap={8} w={280}>
 					<Text size="sm" fw={600}>
-						Share Options
+						{t("share.options")}
 					</Text>
 					<Group gap="xs" wrap="nowrap">
 						<Text size="xs" style={{ flex: 1 }}>
-							Username + Year Range
+							{t("share.minimal")}
 						</Text>
 						<CopyButton value={minimal} timeout={2000}>
 							{({ copied, copy }) => (
-								<Tooltip label={copied ? "Copied" : "Copy link"} withArrow>
+								<Tooltip
+									label={copied ? t("common.copied") : t("common.copyLink")}
+									withArrow
+								>
 									<ActionIcon
 										onClick={copy}
 										variant="subtle"
@@ -83,11 +88,14 @@ export function ShareButton({
 					</Group>
 					<Group gap="xs" wrap="nowrap">
 						<Text size="xs" style={{ flex: 1 }}>
-							Username + Years + Model/Render
+							{t("share.full")}
 						</Text>
 						<CopyButton value={full} timeout={2000}>
 							{({ copied, copy }) => (
-								<Tooltip label={copied ? "Copied" : "Copy link"} withArrow>
+								<Tooltip
+									label={copied ? t("common.copied") : t("common.copyLink")}
+									withArrow
+								>
 									<ActionIcon
 										onClick={copy}
 										variant="subtle"
@@ -100,7 +108,7 @@ export function ShareButton({
 						</CopyButton>
 					</Group>
 					<Text size="xs" c="dimmed">
-						Fonts are not yet included in shared links.
+						{t("share.note")}
 					</Text>
 				</Stack>
 			</Popover.Dropdown>

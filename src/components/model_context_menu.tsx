@@ -12,6 +12,7 @@ import {
 	IconPalette,
 	IconTypography,
 } from "@tabler/icons-react";
+import { useTranslation } from "react-i18next";
 import { useContextMenuStore } from "../stores/context_menu";
 import classes from "../styles/model_context_menu.module.css";
 import { BasePaddingInput } from "./sidebar_inputs/base_padding";
@@ -23,6 +24,8 @@ import { TowerDampeningInput } from "./sidebar_inputs/tower_dampening";
 import { UsernameOverrideInput } from "./sidebar_inputs/username_override";
 
 function BaseControls() {
+	const { t } = useTranslation();
+
 	return (
 		<Stack gap="sm">
 			<Group gap="xs" wrap="nowrap">
@@ -30,7 +33,7 @@ function BaseControls() {
 					<IconTypography size={16} />
 				</ThemeIcon>
 				<Text size="xs" c="dimmed">
-					Nameplate
+					{t("context.nameplate")}
 				</Text>
 			</Group>
 			<UsernameOverrideInput />
@@ -41,7 +44,7 @@ function BaseControls() {
 					<IconCube size={16} />
 				</ThemeIcon>
 				<Text size="xs" c="dimmed">
-					Base geometry
+					{t("context.baseGeometry")}
 				</Text>
 			</Group>
 			<BasePaddingInput />
@@ -51,6 +54,8 @@ function BaseControls() {
 }
 
 function TowerControls() {
+	const { t } = useTranslation();
+
 	return (
 		<Stack gap="sm">
 			<Group gap="xs" wrap="nowrap">
@@ -58,7 +63,7 @@ function TowerControls() {
 					<IconBuildingSkyscraper size={16} />
 				</ThemeIcon>
 				<Text size="xs" c="dimmed">
-					Tower scale
+					{t("context.towerScale")}
 				</Text>
 			</Group>
 			<TowerDampeningInput />
@@ -67,7 +72,7 @@ function TowerControls() {
 					<IconPalette size={16} />
 				</ThemeIcon>
 				<Text size="xs" c="dimmed">
-					Contribution & render color
+					{t("context.contributionRenderColor")}
 				</Text>
 			</Group>
 			<RenderColorInput />
@@ -76,6 +81,7 @@ function TowerControls() {
 }
 
 export function ModelContextMenu() {
+	const { t } = useTranslation();
 	const target = useContextMenuStore((state) => state.target);
 	const position = useContextMenuStore((state) => state.position);
 	const close = useContextMenuStore((state) => state.close);
@@ -105,15 +111,17 @@ export function ModelContextMenu() {
 					</ThemeIcon>
 					<div>
 						<Text className="mona-sans-wide" tt="uppercase" size="xs">
-							{isBase ? "Base" : "Towers"}
+							{isBase ? t("context.base") : t("context.towers")}
 						</Text>
 						<Text size="xs" c="dimmed">
-							{isBase ? "Shape, label and typography" : "Height and color"}
+							{isBase
+								? t("context.baseDescription")
+								: t("context.towersDescription")}
 						</Text>
 					</div>
 				</Group>
 				<CloseButton
-					aria-label="Close contextual controls"
+					aria-label={t("context.close")}
 					variant="subtle"
 					onClick={close}
 				/>

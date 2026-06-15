@@ -1,25 +1,26 @@
 import { Select } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 import {
 	getParametersStore,
 	useParametersContext,
 } from "../../stores/parameters";
 import { SkylineBaseShape } from "../../three/types";
-import { capitalize } from "../../utils";
 
 export function BaseShapeInput() {
+	const { t } = useTranslation();
 	const DEFAULT_VALUE = getParametersStore().getInitialState().inputs.shape;
 	const setInputs = useParametersContext((state) => state.setInputs);
 	return (
 		<Select
-			label="Base Shape"
+			label={t("inputs.baseShape")}
 			data={[
 				{
 					value: SkylineBaseShape.Prism,
-					label: capitalize(SkylineBaseShape.Prism),
+					label: t("baseShape.prism"),
 				},
 				{
 					value: SkylineBaseShape.Frustum,
-					label: capitalize(SkylineBaseShape.Frustum),
+					label: t("baseShape.frustum"),
 				},
 			]}
 			defaultValue={DEFAULT_VALUE}

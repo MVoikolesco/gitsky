@@ -1,0 +1,114 @@
+{
+	"app": {
+		"name": "gitsky",
+		"description": "Gere skylines 3D imprimíveis a partir do seu histórico de contribuições Git."
+	},
+	"common": {
+		"available": "Disponível",
+		"comingSoon": "Em breve",
+		"copied": "Copiado",
+		"copyLink": "Copiar link",
+		"viewOnGithub": "Ver no GitHub"
+	},
+	"nav": {
+		"chooseSource": "Escolha uma fonte",
+		"modelStudio": "Model studio",
+		"source": "Fonte",
+		"sourceDescription": "Usuário e anos de contribuição",
+		"studio": "Studio",
+		"studioDescription": "Texto, modelo, material e arquivo"
+	},
+	"tabs": {
+		"text": "Texto",
+		"model": "Modelo",
+		"render": "Render",
+		"export": "Exportar"
+	},
+	"inputs": {
+		"basePadding": "Padding da base",
+		"baseShape": "Formato da base",
+		"contributionSource": "Fonte de contribuição",
+		"endYear": "Ano final",
+		"fileName": "Nome do arquivo",
+		"font": "Fonte",
+		"format": "Formato",
+		"insetText": "Texto embutido",
+		"renderColor": "Cor do render",
+		"scale": "Escala",
+		"showContributionColors": "Mostrar cores das contribuições",
+		"startYear": "Ano inicial",
+		"towerDampening": "Amortecimento das torres",
+		"usernameOverride": "Nome alternativo"
+	},
+	"actions": {
+		"download": "Download",
+		"generate": "Gerar",
+		"share": "Compartilhar",
+		"uploadJson": "Enviar JSON"
+	},
+	"source": {
+		"bitbucketDescription": "Commits e pull requests do Bitbucket",
+		"fileFallback": "activities-completo.json",
+		"githubDescription": "Atividade pública e privada do GitHub",
+		"gitlabDescription": "Eventos de contribuição do GitLab",
+		"selectSource": "Selecionar fonte",
+		"processing": "Processando...",
+		"uploadSuccess_one": "✓ {{activities}} atividades processadas ({{count}} ano) para {{login}}",
+		"uploadSuccess_other": "✓ {{activities}} atividades processadas ({{count}} anos) para {{login}}",
+		"errors": {
+			"emptyActivities": "O arquivo não contém nenhuma atividade.",
+			"invalidJson": "Erro ao ler JSON: {{message}}",
+			"invalidJsonFallback": "Formato inválido",
+			"invalidPayload": "O arquivo JSON deve conter um array de atividades.",
+			"missingLogin": "Não foi possível encontrar o login do usuário nas atividades.",
+			"noValidActivities": "Nenhuma atividade válida encontrada.",
+			"processFile": "Erro ao processar arquivo: {{message}}",
+			"unknown": "Erro desconhecido",
+			"unableToLoadContributions": "Não foi possível carregar contribuições para \"{{name}}\"."
+		}
+	},
+	"share": {
+		"full": "Usuário + anos + modelo/render",
+		"minimal": "Usuário + intervalo de anos",
+		"note": "As fontes ainda não são incluídas em links compartilhados.",
+		"options": "Opções de compartilhamento"
+	},
+	"context": {
+		"base": "Base",
+		"baseDescription": "Formato, nome e tipografia",
+		"baseGeometry": "Geometria da base",
+		"close": "Fechar controles contextuais",
+		"contributionRenderColor": "Cor de contribuição e render",
+		"nameplate": "Placa de nome",
+		"towers": "Torres",
+		"towersDescription": "Altura e cor",
+		"towerScale": "Escala das torres"
+	},
+	"controls": {
+		"disableRotation": "Desativar rotação",
+		"editSettings": "Editar configurações",
+		"enableCamera": "Ativar câmera {{mode}}",
+		"enableRotation": "Ativar rotação",
+		"openSettings": "Abrir configurações",
+		"resetView": "Resetar visão",
+		"toggleProjectionMode": "Alternar modo de projeção",
+		"toggleRotation": "Alternar rotação"
+	},
+	"projection": {
+		"orthographic": "ortográfica",
+		"perspective": "perspectiva"
+	},
+	"hover": {
+		"contributions": "Contribuições: {{count}}"
+	},
+	"baseShape": {
+		"frustum": "Tronco",
+		"prism": "Prisma"
+	},
+	"settings": {
+		"title": "Configurações"
+	},
+	"errors": {
+		"fontLoad": "Não foi possível carregar a fonte"
+	}
+}

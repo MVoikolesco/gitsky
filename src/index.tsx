@@ -4,6 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "urql";
 import { client } from "./api/client";
+import "./i18n";
 import { shadcnCssVariableResolver } from "./theme/css_variable_resolver";
 import { shadcnTheme } from "./theme/theme";
 import "./theme/style.css";
