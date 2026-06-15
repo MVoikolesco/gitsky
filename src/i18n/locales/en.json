@@ -42,9 +42,39 @@
 	},
 	"actions": {
 		"download": "Download",
+		"export": "Export",
 		"generate": "Generate",
 		"share": "Share",
 		"uploadJson": "Upload JSON"
+	},
+	"export": {
+		"title": "Export 3D model",
+		"cancel": "Cancel",
+		"formats": {
+			"3mf": "3D printing with material and color",
+			"stl": "Simple geometry for slicers",
+			"glb": "Binary 3D file for viewers and apps",
+			"gltf": "JSON 3D scene for editing and exchange",
+			"obj": "Open mesh format for 3D modelers"
+		},
+		"use": {
+			"printing": "Printing",
+			"exchange": "Exchange",
+			"preview": "Preview"
+		},
+		"badges": {
+			"binary": "Binary",
+			"colors": "Colors",
+			"geometry": "Geometry",
+			"text": "Text"
+		},
+		"details": {
+			"dimensions": "Dimensions",
+			"file": "File",
+			"meshes": "Meshes",
+			"scale": "Scale",
+			"triangles": "Triangles"
+		}
 	},
 	"source": {
 		"bitbucketDescription": "Bitbucket commits and pull requests",
