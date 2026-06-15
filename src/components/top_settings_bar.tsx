@@ -112,7 +112,7 @@ function SourceSummary({ ok }: TopSettingsBarProps) {
 			<Popover.Target>
 				<UnstyledButton className={classes.brand}>
 					<ThemeIcon className={classes.brandMark} size={34}>
-						<IconCube size={15} stroke={1.8} />
+						<img className={classes.brandLogo} src="/icon.svg" alt="" />
 					</ThemeIcon>
 					<div className={classes.brandText}>
 						<Text className="mona-sans-wide" tt="uppercase" size="xs" truncate>

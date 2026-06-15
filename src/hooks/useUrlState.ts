@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import {
 	encodeShareState,
 	getInitialInputsFromUrl,
@@ -17,18 +17,13 @@ export function useUrlStateSync() {
 		if (Object.keys(initial).length) {
 			setInputs(initial);
 		}
-	}, []);
 
-	const prevEncodedRef = useRef<string | null>(null);
-	useEffect(() => {
-		const full = toFull(inputs);
-		const encoded = encodeShareState(full);
-		if (prevEncodedRef.current === encoded) return;
-		prevEncodedRef.current = encoded;
 		const url = new URL(window.location.href);
-		url.searchParams.set(URL_PARAM_KEY, encoded);
-		window.history.replaceState({}, "", url);
-	}, [inputs]);
+		if (url.searchParams.has(URL_PARAM_KEY)) {
+			url.searchParams.delete(URL_PARAM_KEY);
+			window.history.replaceState({}, "", url);
+		}
+	}, [setInputs]);
 
 	return {
 		getMinimalLink: () => {

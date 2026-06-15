@@ -134,15 +134,16 @@ export function getInitialInputsFromUrl(
 ): Partial<SkylineModelInputParameters> {
 	const data = readShareFromUrl(urlString);
 	if (!data) return {};
+	const name = data.name.trim() || DEFAULT_INPUT_PARAMETERS.name;
 	if (data.type === "minimal") {
 		return {
-			name: data.name,
+			name,
 			startYear: data.startYear,
 			endYear: data.endYear,
 		};
 	}
 	return {
-		name: data.name,
+		name,
 		nameOverride: data.nameOverride,
 		startYear: data.startYear,
 		endYear: data.endYear,
