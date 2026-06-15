@@ -1,5 +1,6 @@
-import { Select } from "@mantine/core";
+import { Loader, Select } from "@mantine/core";
 import { useState } from "react";
+import { loadTTF } from "../../hooks/useTTFLoader";
 import { DEFAULT_FONT_SELECTION, useFontStore } from "../../stores/fonts";
 import { useParametersContext } from "../../stores/parameters";
 
@@ -7,7 +8,8 @@ import { useParametersContext } from "../../stores/parameters";
 
 export function FontInput() {
 	const setInputs = useParametersContext((state) => state.setInputs);
-	const [fontLoadFailed] = useState(false);
+	const [fontLoadFailed, setFontLoadFailed] = useState(false);
+	const [loadingFont, setLoadingFont] = useState<string | null>(null);
 	const fonts = useFontStore((state) => state.fonts);
 
 	return (
@@ -21,11 +23,23 @@ export function FontInput() {
 				scrollAreaProps={{
 					type: "always",
 				}}
-				onChange={(value) => {
+				rightSection={loadingFont !== null ? <Loader size={16} /> : undefined}
+				onChange={async (value) => {
 					if (value === null) {
 						return;
 					}
-					setInputs({ font: fonts[value] });
+					const fontUrl = fonts[value];
+					setFontLoadFailed(false);
+					setLoadingFont(value);
+					try {
+						await loadTTF(fontUrl);
+						setInputs({ font: fontUrl });
+					} catch (error) {
+						console.error(error);
+						setFontLoadFailed(true);
+					} finally {
+						setLoadingFont(null);
+					}
 				}}
 				error={fontLoadFailed ? "Unable to load font" : ""}
 			/>

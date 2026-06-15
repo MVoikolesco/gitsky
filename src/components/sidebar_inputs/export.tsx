@@ -4,7 +4,11 @@ import { useModelStore } from "../../stores/model";
 import { useParametersContext } from "../../stores/parameters";
 import { useExportedModel } from "../../three/export";
 
-export function ExportButton() {
+interface ExportButtonProps {
+	className?: string;
+}
+
+export function ExportButton({ className }: ExportButtonProps) {
 	const filename = useParametersContext(
 		(state) => state.computed.resolvedFilename,
 	);
@@ -22,6 +26,7 @@ export function ExportButton() {
 	return (
 		<Suspense>
 			<Button
+				className={className}
 				flex={1}
 				loading={model === null || dirty || exporting}
 				disabled={model === null || dirty || exporting}

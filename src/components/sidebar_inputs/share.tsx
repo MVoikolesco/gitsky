@@ -13,7 +13,17 @@ import { useEffect, useState } from "react";
 import { buildShareLinks } from "../../share/urlShare";
 import { useParametersContext } from "../../stores/parameters";
 
-export function ShareButton() {
+interface ShareButtonProps {
+	className?: string;
+	compact?: boolean;
+	popoverPosition?: "top" | "bottom";
+}
+
+export function ShareButton({
+	className,
+	compact = false,
+	popoverPosition = "top",
+}: ShareButtonProps) {
 	const [opened, setOpened] = useState(false);
 	const inputs = useParametersContext((s) => s.inputs);
 	const [minimal, setMinimal] = useState<string>("");
@@ -27,16 +37,25 @@ export function ShareButton() {
 	}, [opened, inputs]);
 
 	return (
-		<Popover opened={opened} onChange={setOpened} position="top" withArrow>
+		<Popover
+			opened={opened}
+			onChange={setOpened}
+			position={popoverPosition}
+			withArrow
+		>
 			<Popover.Target>
 				<Button
+					className={className}
 					variant="light"
 					onClick={() => setOpened((v) => !v)}
 					leftSection={<IconShare2 size={16} />}
+					aria-label="Share"
 				>
-					<Text className="mona-sans-wide" tt="uppercase" fw={900} size="xs">
-						Share
-					</Text>
+					{!compact && (
+						<Text className="mona-sans-wide" tt="uppercase" fw={900} size="xs">
+							Share
+						</Text>
+					)}
 				</Button>
 			</Popover.Target>
 			<Popover.Dropdown>

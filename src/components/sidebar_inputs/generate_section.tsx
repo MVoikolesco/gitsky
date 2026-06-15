@@ -1,4 +1,4 @@
-import { Button, Group, NumberInput } from "@mantine/core";
+import { Button, Group, NumberInput, Stack } from "@mantine/core";
 import { useValidatedState } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import {
@@ -10,12 +10,13 @@ import { ContributionSourceInput } from "./contribution_source_input";
 export interface GenerateSectionProps {
 	ok: boolean;
 	login: string;
+	sourceVariant?: "modal" | "inline";
 }
 
 const MIN_START_YEAR = 2000;
 
 export function GenerateSection(props: GenerateSectionProps) {
-	const { ok } = props;
+	const { ok, sourceVariant = "modal" } = props;
 	const initialStartYear =
 		getParametersStore().getInitialState().inputs.startYear;
 	const initialEndYear = getParametersStore().getInitialState().inputs.endYear;
@@ -85,10 +86,11 @@ export function GenerateSection(props: GenerateSectionProps) {
 	};
 
 	return (
-		<>
+		<Stack gap="sm">
 			<ContributionSourceInput
 				value={name}
 				onChange={handleSourceChange}
+				variant={sourceVariant}
 				error={
 					ok || modified ? "" : `Unable to load contributions for "${name}".`
 				}
@@ -156,6 +158,6 @@ export function GenerateSection(props: GenerateSectionProps) {
 			>
 				Generate
 			</Button>
-		</>
+		</Stack>
 	);
 }
