@@ -41,6 +41,7 @@ interface ContributionSourceInputProps {
 	value: string;
 	onChange: (login: string) => void;
 	error?: string;
+	variant?: "modal" | "inline";
 }
 
 const comingSoonSources = [
@@ -65,6 +66,7 @@ export function ContributionSourceInput({
 	value,
 	onChange,
 	error,
+	variant = "modal",
 }: ContributionSourceInputProps) {
 	const [opened, { open, close }] = useDisclosure(false);
 	const [fileName, setFileName] = useState<string | null>(null);
@@ -157,7 +159,9 @@ export function ContributionSourceInput({
 
 			// Wait a bit so user can see the success message
 			setTimeout(() => {
-				close();
+				if (variant === "modal") {
+					close();
+				}
 				setIsProcessing(false);
 			}, 1500);
 		} catch (error) {
@@ -168,6 +172,105 @@ export function ContributionSourceInput({
 			setIsProcessing(false);
 		}
 	};
+
+	const sourceContent = (
+		<Stack gap="sm">
+			<Paper withBorder p="sm" radius="sm">
+				<Group justify="space-between" align="flex-start" gap="sm">
+					<Group gap="sm">
+						<ThemeIcon variant="light" size="lg">
+							<IconGitBranch size={18} />
+						</ThemeIcon>
+						<div>
+							<Text fw={600} size="sm">
+								Gitea
+							</Text>
+							<Text size="xs" c="dimmed">
+								{fileName ?? "activities-completo.json"}
+							</Text>
+						</div>
+					</Group>
+					<Badge color="green" leftSection={<IconCheck size={12} />}>
+						Available
+					</Badge>
+				</Group>
+				<FileButton
+					onChange={handleGiteaUpload}
+					accept="application/json"
+					disabled={isProcessing}
+				>
+					{(props) => (
+						<Button
+							{...props}
+							fullWidth
+							mt="sm"
+							variant="light"
+							leftSection={
+								isProcessing ? <Loader size={16} /> : <IconUpload size={16} />
+							}
+							disabled={isProcessing}
+						>
+							{isProcessing ? "Processando..." : "Upload JSON"}
+						</Button>
+					)}
+				</FileButton>
+				{uploadSuccess && (
+					<Text size="xs" c="green" mt="xs" fw={500}>
+						{uploadSuccess}
+					</Text>
+				)}
+				{uploadError && (
+					<Text size="xs" c="red" mt="xs">
+						{uploadError}
+					</Text>
+				)}
+			</Paper>
+
+			{comingSoonSources.map((source) => {
+				const Icon = source.icon;
+				return (
+					<Paper
+						key={source.label}
+						withBorder
+						p="sm"
+						radius="sm"
+						opacity={0.65}
+					>
+						<Group justify="space-between" align="flex-start" gap="sm">
+							<Group gap="sm">
+								<ThemeIcon variant="default" size="lg">
+									<Icon size={18} />
+								</ThemeIcon>
+								<div>
+									<Text fw={600} size="sm">
+										{source.label}
+									</Text>
+									<Text size="xs" c="dimmed">
+										{source.description}
+									</Text>
+								</div>
+							</Group>
+							<Badge
+								variant="light"
+								color="gray"
+								leftSection={<IconClock size={12} />}
+							>
+								Coming soon
+							</Badge>
+						</Group>
+					</Paper>
+				);
+			})}
+		</Stack>
+	);
+
+	if (variant === "inline") {
+		return (
+			<InputWrapper label="Contribution source" error={error}>
+				{sourceContent}
+			</InputWrapper>
+		);
+	}
 
 	return (
 		<InputWrapper label="Contribution source" error={error}>
@@ -189,98 +292,7 @@ export function ContributionSourceInput({
 				size="md"
 				centered
 			>
-				<Stack gap="sm">
-					<Paper withBorder p="sm" radius="sm">
-						<Group justify="space-between" align="flex-start" gap="sm">
-							<Group gap="sm">
-								<ThemeIcon variant="light" size="lg">
-									<IconGitBranch size={18} />
-								</ThemeIcon>
-								<div>
-									<Text fw={600} size="sm">
-										Gitea
-									</Text>
-									<Text size="xs" c="dimmed">
-										{fileName ?? "activities-completo.json"}
-									</Text>
-								</div>
-							</Group>
-							<Badge color="green" leftSection={<IconCheck size={12} />}>
-								Available
-							</Badge>
-						</Group>
-						<FileButton
-							onChange={handleGiteaUpload}
-							accept="application/json"
-							disabled={isProcessing}
-						>
-							{(props) => (
-								<Button
-									{...props}
-									fullWidth
-									mt="sm"
-									variant="light"
-									leftSection={
-										isProcessing ? (
-											<Loader size={16} />
-										) : (
-											<IconUpload size={16} />
-										)
-									}
-									disabled={isProcessing}
-								>
-									{isProcessing ? "Processando..." : "Upload JSON"}
-								</Button>
-							)}
-						</FileButton>
-						{uploadSuccess && (
-							<Text size="xs" c="green" mt="xs" fw={500}>
-								{uploadSuccess}
-							</Text>
-						)}
-						{uploadError && (
-							<Text size="xs" c="red" mt="xs">
-								{uploadError}
-							</Text>
-						)}
-					</Paper>
-
-					{comingSoonSources.map((source) => {
-						const Icon = source.icon;
-						return (
-							<Paper
-								key={source.label}
-								withBorder
-								p="sm"
-								radius="sm"
-								opacity={0.65}
-							>
-								<Group justify="space-between" align="flex-start" gap="sm">
-									<Group gap="sm">
-										<ThemeIcon variant="default" size="lg">
-											<Icon size={18} />
-										</ThemeIcon>
-										<div>
-											<Text fw={600} size="sm">
-												{source.label}
-											</Text>
-											<Text size="xs" c="dimmed">
-												{source.description}
-											</Text>
-										</div>
-									</Group>
-									<Badge
-										variant="light"
-										color="gray"
-										leftSection={<IconClock size={12} />}
-									>
-										Coming soon
-									</Badge>
-								</Group>
-							</Paper>
-						);
-					})}
-				</Stack>
+				{sourceContent}
 			</Modal>
 		</InputWrapper>
 	);

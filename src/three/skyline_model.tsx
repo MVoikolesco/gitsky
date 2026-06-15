@@ -1,6 +1,6 @@
 import { darken } from "@mantine/core";
 import { Instances, useBounds } from "@react-three/drei";
-import { type MutableRefObject, useEffect, useState } from "react";
+import { type MutableRefObject, useEffect, useRef, useState } from "react";
 import { Color, type Group as ThreeGroup } from "three";
 import type {
 	ContributionDay,
@@ -40,26 +40,32 @@ export function SkylineModel({ group, years }: SkylineModelProps) {
 	const clearReset = useControlsStore((state) => state.clearReset);
 
 	const bounds = useBounds();
-	let boundsTimeout: number | undefined;
+	const boundsTimeout = useRef<number | undefined>(undefined);
+	const previousFont = useRef(inputs.font);
 	const clearBoundsTimeout = () => {
-		if (boundsTimeout !== undefined) {
-			clearTimeout(boundsTimeout);
+		if (boundsTimeout.current !== undefined) {
+			clearTimeout(boundsTimeout.current);
+			boundsTimeout.current = undefined;
 		}
 	};
 
 	useEffect(() => {
-		clearTimeout(boundsTimeout);
+		const fontChanged = previousFont.current !== inputs.font;
+		clearBoundsTimeout();
 		setDirty(true);
-		boundsTimeout = setTimeout(() => {
+		boundsTimeout.current = setTimeout(() => {
 			if (group.current === null) {
 				return;
 			}
 			setDirty(false);
 			if (initialized) {
-				bounds.refresh().clip().fit();
+				if (!fontChanged) {
+					bounds.refresh().clip().fit();
+				}
 			} else {
 				setInitialized(true);
 			}
+			previousFont.current = inputs.font;
 			setModel(group.current.clone());
 		}, 1000);
 

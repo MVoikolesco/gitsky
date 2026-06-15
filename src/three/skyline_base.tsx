@@ -9,6 +9,7 @@ import {
 	type ManifoldFrustumText,
 	makeThreeFrustum,
 } from "../manifold/frustum";
+import { useContextMenuStore } from "../stores/context_menu";
 import { useParametersContext } from "../stores/parameters";
 import type { SkylineProps } from "./skyline";
 import { SkylineBaseShape } from "./types";
@@ -19,6 +20,7 @@ export interface SkylineBaseProps extends SkylineProps {}
 export function SkylineBase({ years }: SkylineBaseProps) {
 	const inputs = useParametersContext(useShallow((state) => state.inputs));
 	const computed = useParametersContext(useShallow((state) => state.computed));
+	const openContextMenu = useContextMenuStore((state) => state.open);
 
 	// TODO: dont memoize this, maybe make a hook to just update props
 	const material = useMemo(
@@ -111,11 +113,16 @@ export function SkylineBase({ years }: SkylineBaseProps) {
 
 	return (
 		<group name={SkylineObjectNames.Base}>
+			{/* biome-ignore lint/a11y/noStaticElementInteractions: Three.js meshes receive pointer events in the 3D scene. */}
 			<mesh
 				geometry={frustum.geometry}
 				position={[0, -computed.halfPlatformHeight, TEXT_EXTRUSION_OFFSET]}
 				material={material}
 				onPointerOver={(e) => e.stopPropagation()}
+				onClick={(e) => {
+					e.stopPropagation();
+					openContextMenu("base", { x: e.clientX, y: e.clientY });
+				}}
 				castShadow
 				receiveShadow
 			/>

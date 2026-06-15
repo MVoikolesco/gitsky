@@ -14,6 +14,19 @@
 	font-display: swap;
 }
 
+[data-mantine-color-scheme="dark"] {
+	--gitsky-surface: rgba(18, 27, 40, 0.96);
+	--gitsky-surface-raised: rgba(28, 40, 58, 0.94);
+	--gitsky-surface-hover: rgba(127, 183, 255, 0.12);
+	--gitsky-outline: rgba(223, 239, 255, 0.17);
+	--gitsky-outline-strong: rgba(127, 183, 255, 0.32);
+	--gitsky-accent: #7fb7ff;
+	--gitsky-accent-soft: rgba(127, 183, 255, 0.16);
+	--gitsky-text-soft: #b8c9dc;
+	--gitsky-radius: 14px;
+	--gitsky-radius-sm: 10px;
+}
+
 /* Checkbox */
 .mantine-Checkbox-root {
 	--checkbox-color: var(--mantine-primary-color-filled);
@@ -117,6 +130,67 @@
 			--input-bg: transparent;
 			--input-bd-focus: transparent;
 		}
+
+		.mantine-Input-input {
+			border-radius: var(--gitsky-radius-sm);
+			background: rgba(255, 255, 255, 0.045);
+			border-color: var(--gitsky-outline);
+			color: #eef7ff;
+
+			&:hover:not(:disabled, [data-disabled]) {
+				border-color: rgba(127, 183, 255, 0.24);
+				background: rgba(255, 255, 255, 0.06);
+			}
+
+			&:focus,
+			&:focus-within {
+				border-color: var(--gitsky-outline-strong);
+			}
+		}
+
+		.mantine-Input-section {
+			color: var(--gitsky-text-soft);
+		}
+	}
+
+	.mantine-InputWrapper-label {
+		color: #d7ebff;
+		font-size: var(--mantine-font-size-xs);
+		font-weight: 700;
+	}
+
+	.mantine-InputWrapper-description {
+		color: var(--gitsky-text-soft);
+	}
+}
+
+/* Select / Combobox */
+.mantine-Combobox-dropdown,
+.mantine-Select-dropdown {
+	border: 1px solid var(--gitsky-outline);
+	border-radius: var(--gitsky-radius);
+	background:
+		linear-gradient(180deg, rgba(127, 183, 255, 0.1), transparent 96px),
+		var(--gitsky-surface);
+	box-shadow:
+		0 24px 64px rgba(0, 0, 0, 0.38),
+		0 1px 0 rgba(255, 255, 255, 0.08) inset;
+	backdrop-filter: blur(18px) saturate(1.1);
+	padding: 6px;
+}
+
+.mantine-Combobox-option {
+	border-radius: var(--gitsky-radius-sm);
+	color: #eef7ff;
+
+	&:where([data-combobox-selected]) {
+		background: var(--gitsky-accent);
+		color: #102033;
+	}
+
+	&:where([data-combobox-active], :hover) {
+		background: var(--gitsky-surface-hover);
+		color: #eef7ff;
 	}
 }
 
@@ -301,6 +375,28 @@
 
 /* Button */
 .mantine-Button-root {
+	border-radius: var(--gitsky-radius-sm);
+
+	&[data-variant="default"] {
+		border-color: var(--gitsky-outline);
+		background: rgba(255, 255, 255, 0.045);
+		color: #eef7ff;
+
+		&:hover:where(:not(:disabled, [data-disabled])) {
+			border-color: rgba(127, 183, 255, 0.24);
+			background: var(--gitsky-surface-hover);
+		}
+	}
+
+	&[data-variant="light"] {
+		background: var(--gitsky-accent-soft);
+		color: #d7ebff;
+
+		&:hover:where(:not(:disabled, [data-disabled])) {
+			background: rgba(127, 183, 255, 0.22);
+		}
+	}
+
 	&:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
 		border: var(--button-bd);
 		opacity: 0.5;
@@ -504,9 +600,47 @@
 
 /* Modal */
 .mantine-Modal-root {
+	.mantine-Modal-overlay {
+		background: rgba(5, 9, 14, 0.58);
+		backdrop-filter: blur(8px);
+	}
+
 	.mantine-Modal-content {
-		border: 1px solid var(--mantine-color-default-border);
-		border-radius: var(--mantine-radius-default);
+		border: 1px solid var(--gitsky-outline);
+		border-radius: 18px;
+		background:
+			linear-gradient(180deg, rgba(127, 183, 255, 0.12), transparent 132px),
+			var(--gitsky-surface);
+		box-shadow:
+			0 34px 90px rgba(0, 0, 0, 0.48),
+			0 1px 0 rgba(255, 255, 255, 0.08) inset;
+		backdrop-filter: blur(20px) saturate(1.12);
+	}
+
+	.mantine-Modal-header {
+		border-bottom: 1px solid rgba(223, 239, 255, 0.1);
+		background: transparent;
+	}
+
+	.mantine-Modal-title {
+		color: #eef7ff;
+		font-size: var(--mantine-font-size-sm);
+		font-weight: 800;
+		text-transform: uppercase;
+	}
+
+	.mantine-Modal-close {
+		border-radius: var(--gitsky-radius-sm);
+		color: var(--gitsky-text-soft);
+
+		&:hover {
+			background: var(--gitsky-surface-hover);
+			color: #eef7ff;
+		}
+	}
+
+	.mantine-Modal-body {
+		background: transparent;
 	}
 }
 
@@ -648,8 +782,11 @@
 
 /* Paper */
 .mantine-Paper-root {
+	border-radius: var(--gitsky-radius);
+
 	&:where([data-with-border]) {
-		border: rem(1px) solid var(--mantine-color-default-border);
+		border: 1px solid var(--gitsky-outline);
+		background: var(--gitsky-surface-raised);
 	}
 }
 
