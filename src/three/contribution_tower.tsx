@@ -2,6 +2,7 @@ import { Instance, type PositionMesh } from "@react-three/drei";
 import { useRef } from "react";
 import { Color } from "three";
 import type { ContributionDay } from "../api/types";
+import { useContextMenuStore } from "../stores/context_menu";
 import { useTowerStore } from "../stores/tower";
 
 interface ContributionTowerProps {
@@ -29,6 +30,7 @@ export function ContributionTower({
 }: ContributionTowerProps) {
 	const height = (day.contributionCount * size) / dampening;
 	const mesh = useRef<PositionMesh | null>(null);
+	const openContextMenu = useContextMenuStore((state) => state.open);
 	const setPosition = useTowerStore((state) => state.setPosition);
 	const setTarget = useTowerStore((state) => state.setTarget);
 	return (
@@ -49,6 +51,10 @@ export function ContributionTower({
 			}}
 			onPointerMove={(e) => {
 				setPosition({ x: e.clientX, y: e.clientY });
+			}}
+			onClick={(e) => {
+				e.stopPropagation();
+				openContextMenu("towers", { x: e.clientX, y: e.clientY });
 			}}
 			onPointerLeave={(e) => {
 				if (mesh.current === null) {
