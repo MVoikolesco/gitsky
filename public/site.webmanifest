@@ -1,0 +1,16 @@
+{
+	"name": "gitsky",
+	"short_name": "gitsky",
+	"description": "Generate printable 3D skylines from your Git contribution history.",
+	"icons": [
+		{
+			"src": "/icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any maskable"
+		}
+	],
+	"theme_color": "#071827",
+	"background_color": "#071827",
+	"display": "standalone"
+}

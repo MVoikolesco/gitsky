@@ -7,11 +7,6 @@ export default defineConfig({
 	build: {
 		target: "esnext",
 	},
-	resolve: {
-		alias: {
-			module: false,
-		},
-	},
 	server: {
 		host: "0.0.0.0",
 		port: 3000,

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+	<title id="title">gitsky icon</title>
+	<desc id="desc">A modern isometric Git contribution skyline over a blue night sky.</desc>
+	<defs>
+		<linearGradient id="sky" x1="82" x2="430" y1="42" y2="470" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#e3f7ff" />
+			<stop offset="0.2" stop-color="#73d7ff" />
+			<stop offset="0.58" stop-color="#1976d2" />
+			<stop offset="1" stop-color="#071827" />
+		</linearGradient>
+		<linearGradient id="baseTop" x1="134" x2="382" y1="268" y2="352" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#d8f5ff" />
+			<stop offset="0.52" stop-color="#7dcfff" />
+			<stop offset="1" stop-color="#2d7fd8" />
+		</linearGradient>
+		<linearGradient id="baseSide" x1="108" x2="396" y1="320" y2="430" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#144a86" />
+			<stop offset="1" stop-color="#08243d" />
+		</linearGradient>
+		<linearGradient id="tower" x1="166" x2="352" y1="132" y2="316" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#f2fdff" />
+			<stop offset="0.45" stop-color="#7be3ff" />
+			<stop offset="1" stop-color="#1f91e8" />
+		</linearGradient>
+		<filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+			<feDropShadow dx="0" dy="20" stdDeviation="24" flood-color="#03101d" flood-opacity="0.42" />
+		</filter>
+	</defs>
+
+	<rect width="512" height="512" rx="116" fill="url(#sky)" />
+	<path fill="#ffffff" fill-opacity="0.46" d="M372 88l10 22 22 10-22 10-10 22-10-22-22-10 22-10 10-22z" />
+	<path fill="#ffffff" fill-opacity="0.28" d="M132 102l6 13 13 6-13 6-6 13-6-13-13-6 13-6 6-13z" />
+	<path fill="none" stroke="#d9f7ff" stroke-linecap="round" stroke-opacity="0.4" stroke-width="12" d="M126 196c62-50 157-66 258-30" />
+
+	<g filter="url(#softShadow)">
+		<path fill="url(#baseSide)" d="M104 316l152 82 152-82v55l-152 86-152-86v-55z" />
+		<path fill="#0a3357" d="M256 398l152-82v55l-152 86v-59z" opacity="0.9" />
+		<path fill="url(#baseTop)" d="M104 316l152-86 152 86-152 82-152-82z" />
+		<path fill="none" stroke="#ebfbff" stroke-linejoin="round" stroke-opacity="0.64" stroke-width="10" d="M104 316l152-86 152 86-152 82-152-82z" />
+
+		<path fill="#083252" d="M162 288l31-18 31 18v58l-31 18-31-18v-58z" opacity="0.28" />
+		<path fill="#083252" d="M224 253l31-18 31 18v94l-31 18-31-18v-94z" opacity="0.28" />
+		<path fill="#083252" d="M286 286l31-18 31 18v58l-31 18-31-18v-58z" opacity="0.28" />
+
+		<path fill="url(#tower)" d="M166 238l28-16 28 16v106l-28 16-28-16V238z" />
+		<path fill="#0b5ea6" d="M194 254l28-16v106l-28 16V254z" opacity="0.62" />
+		<path fill="#e9fbff" d="M166 238l28-16 28 16-28 16-28-16z" opacity="0.82" />
+
+		<path fill="url(#tower)" d="M229 181l28-16 28 16v166l-28 16-28-16V181z" />
+		<path fill="#0b5ea6" d="M257 197l28-16v166l-28 16V197z" opacity="0.62" />
+		<path fill="#f4fdff" d="M229 181l28-16 28 16-28 16-28-16z" />
+
+		<path fill="url(#tower)" d="M292 230l28-16 28 16v113l-28 16-28-16V230z" />
+		<path fill="#0b5ea6" d="M320 246l28-16v113l-28 16V246z" opacity="0.62" />
+		<path fill="#e9fbff" d="M292 230l28-16 28 16-28 16-28-16z" opacity="0.88" />
+
+		<path fill="none" stroke="#eafcff" stroke-linecap="round" stroke-opacity="0.56" stroke-width="8" d="M181 271v52M244 218v96M307 263v57" />
+	</g>
+</svg>
