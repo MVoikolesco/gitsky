@@ -27,7 +27,6 @@ import classes from "../styles/top_settings_bar.module.css";
 import { BasePaddingInput } from "./sidebar_inputs/base_padding";
 import { BaseShapeInput } from "./sidebar_inputs/base_shape";
 import { ExportButton } from "./sidebar_inputs/export";
-import { ExportFormatInput } from "./sidebar_inputs/export_format";
 import { FilenameInput } from "./sidebar_inputs/filename";
 import { FontInput } from "./sidebar_inputs/font_input";
 import { GenerateSection } from "./sidebar_inputs/generate_section";
@@ -217,7 +216,6 @@ function StudioPanel() {
 				<Tabs.Panel value="export" pt="md">
 					<Stack gap="sm">
 						<FilenameInput />
-						<ExportFormatInput />
 						<ScaleInput />
 					</Stack>
 				</Tabs.Panel>
