@@ -3,7 +3,7 @@ services:
     build:
       context: .
     environment:
-      PUBLIC_APP_NAME: Git Contribuitions Sky
+      PUBLIC_APP_NAME: gitsky
       PUBLIC_USE_MOCKS: "true"
     ports:
       - "3000:3000"

@@ -21,6 +21,7 @@ import {
 	IconUpload,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	getLoginFromGiteaActivities,
 	processGiteaActivitiesIntoCalendars,
@@ -47,17 +48,17 @@ interface ContributionSourceInputProps {
 const comingSoonSources = [
 	{
 		label: "GitHub",
-		description: "Public and private GitHub activity",
+		descriptionKey: "source.githubDescription",
 		icon: IconBrandGithub,
 	},
 	{
 		label: "GitLab",
-		description: "GitLab contribution events",
+		descriptionKey: "source.gitlabDescription",
 		icon: IconBrandGitlab,
 	},
 	{
 		label: "Bitbucket",
-		description: "Bitbucket commits and pull requests",
+		descriptionKey: "source.bitbucketDescription",
 		icon: IconGitBranch,
 	},
 ];
@@ -68,6 +69,7 @@ export function ContributionSourceInput({
 	error,
 	variant = "modal",
 }: ContributionSourceInputProps) {
+	const { t } = useTranslation();
 	const [opened, { open, close }] = useDisclosure(false);
 	const [fileName, setFileName] = useState<string | null>(null);
 	const [uploadError, setUploadError] = useState<string | null>(null);
@@ -93,71 +95,65 @@ export function ContributionSourceInput({
 
 		try {
 			const fileText = await file.text();
-			console.log("Arquivo lido, tamanho:", fileText.length, "bytes");
 
 			let payload: unknown;
 			try {
 				payload = JSON.parse(fileText);
-				console.log("JSON parseado com sucesso");
 			} catch (parseError) {
-				console.error("Erro ao fazer parse do JSON:", parseError);
 				setUploadError(
-					`Erro ao ler JSON: ${parseError instanceof Error ? parseError.message : "Formato inválido"}`,
+					t("source.errors.invalidJson", {
+						message:
+							parseError instanceof Error
+								? parseError.message
+								: t("source.errors.invalidJsonFallback"),
+					}),
 				);
 				setIsProcessing(false);
 				return;
 			}
 
-			// Validate it's an array of activities
 			if (!Array.isArray(payload)) {
-				console.error("Payload não é um array:", typeof payload);
-				setUploadError("O arquivo JSON deve conter um array de atividades.");
+				setUploadError(t("source.errors.invalidPayload"));
 				setIsProcessing(false);
 				return;
 			}
 
-			console.log("Total de atividades:", payload.length);
-
 			if (payload.length === 0) {
-				setUploadError("O arquivo não contém nenhuma atividade.");
+				setUploadError(t("source.errors.emptyActivities"));
 				setIsProcessing(false);
 				return;
 			}
 
 			const login = getLoginFromGiteaActivities(payload);
-			console.log("Login extraído:", login);
 
 			if (!login) {
-				setUploadError(
-					"Não foi possível encontrar o login do usuário nas atividades.",
-				);
+				setUploadError(t("source.errors.missingLogin"));
 				setIsProcessing(false);
 				return;
 			}
 
-			// Process activities into calendars by year
-			console.log("Processando atividades em calendários...");
 			const calendars = processGiteaActivitiesIntoCalendars(
 				payload as GiteaActivity[],
 			);
 
 			const yearCount = Object.keys(calendars).length;
 			if (yearCount === 0) {
-				setUploadError("Nenhuma atividade válida encontrada.");
+				setUploadError(t("source.errors.noValidActivities"));
 				setIsProcessing(false);
 				return;
 			}
 
-			// Store the processed calendars (much smaller than raw activities)
 			setCalendars(calendars, login);
 			onChange(login);
-			console.log("Calendários armazenados com sucesso");
 
 			setUploadSuccess(
-				`✓ ${payload.length} atividades processadas (${yearCount} ano${yearCount > 1 ? "s" : ""}) para ${login}`,
+				t("source.uploadSuccess", {
+					activities: payload.length,
+					count: yearCount,
+					login,
+				}),
 			);
 
-			// Wait a bit so user can see the success message
 			setTimeout(() => {
 				if (variant === "modal") {
 					close();
@@ -165,9 +161,11 @@ export function ContributionSourceInput({
 				setIsProcessing(false);
 			}, 1500);
 		} catch (error) {
-			console.error("Erro no upload:", error);
 			setUploadError(
-				`Erro ao processar arquivo: ${error instanceof Error ? error.message : "Erro desconhecido"}`,
+				t("source.errors.processFile", {
+					message:
+						error instanceof Error ? error.message : t("source.errors.unknown"),
+				}),
 			);
 			setIsProcessing(false);
 		}
@@ -186,12 +184,12 @@ export function ContributionSourceInput({
 								Gitea
 							</Text>
 							<Text size="xs" c="dimmed">
-								{fileName ?? "activities-completo.json"}
+								{fileName ?? t("source.fileFallback")}
 							</Text>
 						</div>
 					</Group>
 					<Badge color="green" leftSection={<IconCheck size={12} />}>
-						Available
+						{t("common.available")}
 					</Badge>
 				</Group>
 				<FileButton
@@ -210,7 +208,7 @@ export function ContributionSourceInput({
 							}
 							disabled={isProcessing}
 						>
-							{isProcessing ? "Processando..." : "Upload JSON"}
+							{isProcessing ? t("source.processing") : t("actions.uploadJson")}
 						</Button>
 					)}
 				</FileButton>
@@ -246,7 +244,7 @@ export function ContributionSourceInput({
 										{source.label}
 									</Text>
 									<Text size="xs" c="dimmed">
-										{source.description}
+										{t(source.descriptionKey)}
 									</Text>
 								</div>
 							</Group>
@@ -255,7 +253,7 @@ export function ContributionSourceInput({
 								color="gray"
 								leftSection={<IconClock size={12} />}
 							>
-								Coming soon
+								{t("common.comingSoon")}
 							</Badge>
 						</Group>
 					</Paper>
@@ -266,14 +264,14 @@ export function ContributionSourceInput({
 
 	if (variant === "inline") {
 		return (
-			<InputWrapper label="Contribution source" error={error}>
+			<InputWrapper label={t("inputs.contributionSource")} error={error}>
 				{sourceContent}
 			</InputWrapper>
 		);
 	}
 
 	return (
-		<InputWrapper label="Contribution source" error={error}>
+		<InputWrapper label={t("inputs.contributionSource")} error={error}>
 			<Button
 				fullWidth
 				variant="default"
@@ -282,13 +280,13 @@ export function ContributionSourceInput({
 				rightSection={<Badge size="xs">Gitea</Badge>}
 				onClick={handleOpen}
 			>
-				{value.trim() ? value : "Select source"}
+				{value.trim() ? value : t("source.selectSource")}
 			</Button>
 
 			<Modal
 				opened={opened}
 				onClose={close}
-				title="Contribution source"
+				title={t("inputs.contributionSource")}
 				size="md"
 				centered
 			>

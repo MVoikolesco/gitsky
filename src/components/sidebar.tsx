@@ -15,6 +15,7 @@ import {
 	IconPaint,
 	IconTextSize,
 } from "@tabler/icons-react";
+import { useTranslation } from "react-i18next";
 import accordionClasses from "../styles/accordion.module.css";
 import { BasePaddingInput } from "./sidebar_inputs/base_padding";
 import { BaseShapeInput } from "./sidebar_inputs/base_shape";
@@ -36,6 +37,7 @@ interface SidebarProps {
 }
 
 export function Sidebar(props: SidebarProps) {
+	const { t } = useTranslation();
 	const { fromDrawer, ok } = props;
 
 	return (
@@ -43,7 +45,7 @@ export function Sidebar(props: SidebarProps) {
 			{!fromDrawer && (
 				<AppShell.Section px={6} py={4}>
 					<Title className="mona-sans-wide" tt="uppercase" order={5}>
-						{import.meta.env.PUBLIC_APP_NAME}
+						{t("app.name")}
 					</Title>
 				</AppShell.Section>
 			)}
@@ -61,12 +63,12 @@ export function Sidebar(props: SidebarProps) {
 						<GenerateSection ok={ok} login="" />
 						<Divider />
 						<Title className="mona-sans-wide" tt="uppercase" order={5}>
-							Settings
+							{t("settings.title")}
 						</Title>
 						<Accordion classNames={accordionClasses}>
 							<Accordion.Item value="text_options">
 								<Accordion.Control icon={<IconTextSize stroke={1} size={20} />}>
-									Text
+									{t("tabs.text")}
 								</Accordion.Control>
 								<Accordion.Panel>
 									<Stack>
@@ -78,7 +80,7 @@ export function Sidebar(props: SidebarProps) {
 							</Accordion.Item>
 							<Accordion.Item value="model_options">
 								<Accordion.Control icon={<IconCube stroke={1} size={20} />}>
-									Model
+									{t("tabs.model")}
 								</Accordion.Control>
 								<Accordion.Panel>
 									<Stack>
@@ -90,7 +92,7 @@ export function Sidebar(props: SidebarProps) {
 							</Accordion.Item>
 							<Accordion.Item value="display_options">
 								<Accordion.Control icon={<IconPaint stroke={1} size={20} />}>
-									Render
+									{t("tabs.render")}
 								</Accordion.Control>
 								<Accordion.Panel>
 									<Stack gap={10}>
@@ -100,7 +102,7 @@ export function Sidebar(props: SidebarProps) {
 							</Accordion.Item>
 							<Accordion.Item value="export_options">
 								<Accordion.Control icon={<IconDownload stroke={1} size={20} />}>
-									Export
+									{t("tabs.export")}
 								</Accordion.Control>
 								<Accordion.Panel>
 									<Stack gap={10}>
@@ -130,7 +132,7 @@ export function Sidebar(props: SidebarProps) {
 					leftSection={<IconBrandGithubFilled size={14} />}
 					fullWidth
 				>
-					View on Github
+					{t("common.viewOnGithub")}
 				</Button>
 			</AppShell.Section>
 		</Stack>

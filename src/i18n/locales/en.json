@@ -1,0 +1,114 @@
+{
+	"app": {
+		"name": "gitsky",
+		"description": "Generate printable 3D skylines from your Git contribution history."
+	},
+	"common": {
+		"available": "Available",
+		"comingSoon": "Coming soon",
+		"copied": "Copied",
+		"copyLink": "Copy link",
+		"viewOnGithub": "View on GitHub"
+	},
+	"nav": {
+		"chooseSource": "Choose a source",
+		"modelStudio": "Model studio",
+		"source": "Source",
+		"sourceDescription": "User and contribution years",
+		"studio": "Studio",
+		"studioDescription": "Text, model, material & file"
+	},
+	"tabs": {
+		"text": "Text",
+		"model": "Model",
+		"render": "Render",
+		"export": "Export"
+	},
+	"inputs": {
+		"basePadding": "Base Padding",
+		"baseShape": "Base Shape",
+		"contributionSource": "Contribution source",
+		"endYear": "End Year",
+		"fileName": "File Name",
+		"font": "Font",
+		"format": "Format",
+		"insetText": "Inset Text",
+		"renderColor": "Render Color",
+		"scale": "Scale",
+		"showContributionColors": "Show Contribution Colors",
+		"startYear": "Start Year",
+		"towerDampening": "Tower Dampening",
+		"usernameOverride": "Username Override"
+	},
+	"actions": {
+		"download": "Download",
+		"generate": "Generate",
+		"share": "Share",
+		"uploadJson": "Upload JSON"
+	},
+	"source": {
+		"bitbucketDescription": "Bitbucket commits and pull requests",
+		"fileFallback": "activities-completo.json",
+		"githubDescription": "Public and private GitHub activity",
+		"gitlabDescription": "GitLab contribution events",
+		"selectSource": "Select source",
+		"processing": "Processing...",
+		"uploadSuccess_one": "✓ {{activities}} activities processed ({{count}} year) for {{login}}",
+		"uploadSuccess_other": "✓ {{activities}} activities processed ({{count}} years) for {{login}}",
+		"errors": {
+			"emptyActivities": "The file does not contain any activities.",
+			"invalidJson": "Error reading JSON: {{message}}",
+			"invalidJsonFallback": "Invalid format",
+			"invalidPayload": "The JSON file must contain an array of activities.",
+			"missingLogin": "Could not find the user login in the activities.",
+			"noValidActivities": "No valid activities found.",
+			"processFile": "Error processing file: {{message}}",
+			"unknown": "Unknown error",
+			"unableToLoadContributions": "Unable to load contributions for \"{{name}}\"."
+		}
+	},
+	"share": {
+		"full": "Username + Years + Model/Render",
+		"minimal": "Username + Year Range",
+		"note": "Fonts are not yet included in shared links.",
+		"options": "Share Options"
+	},
+	"context": {
+		"base": "Base",
+		"baseDescription": "Shape, label and typography",
+		"baseGeometry": "Base geometry",
+		"close": "Close contextual controls",
+		"contributionRenderColor": "Contribution & render color",
+		"nameplate": "Nameplate",
+		"towers": "Towers",
+		"towersDescription": "Height and color",
+		"towerScale": "Tower scale"
+	},
+	"controls": {
+		"disableRotation": "Disable Rotation",
+		"editSettings": "Edit Settings",
+		"enableCamera": "Enable {{mode}} Camera",
+		"enableRotation": "Enable Rotation",
+		"openSettings": "Open Settings",
+		"resetView": "Reset View",
+		"toggleProjectionMode": "Toggle Projection Mode",
+		"toggleRotation": "Toggle Rotation"
+	},
+	"projection": {
+		"orthographic": "Orthographic",
+		"perspective": "Perspective"
+	},
+	"hover": {
+		"contributions": "Contributions: {{count}}"
+	},
+	"baseShape": {
+		"frustum": "Frustum",
+		"prism": "Prism"
+	},
+	"settings": {
+		"title": "Settings"
+	},
+	"errors": {
+		"fontLoad": "Unable to load font"
+	}
+}

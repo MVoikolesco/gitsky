@@ -1,5 +1,6 @@
 import { Button, Text } from "@mantine/core";
 import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { useModelStore } from "../../stores/model";
 import { useParametersContext } from "../../stores/parameters";
 import { useExportedModel } from "../../three/export";
@@ -9,6 +10,7 @@ interface ExportButtonProps {
 }
 
 export function ExportButton({ className }: ExportButtonProps) {
+	const { t } = useTranslation();
 	const filename = useParametersContext(
 		(state) => state.computed.resolvedFilename,
 	);
@@ -41,7 +43,7 @@ export function ExportButton({ className }: ExportButtonProps) {
 						fw={900}
 						size="xs"
 					>
-						DOWNLOAD
+						{t("actions.download")}
 					</Text>
 					<Text size="xs">{size}</Text>
 				</div>

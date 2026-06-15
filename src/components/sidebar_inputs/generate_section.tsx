@@ -1,6 +1,7 @@
 import { Button, Group, NumberInput, Stack } from "@mantine/core";
 import { useValidatedState } from "@mantine/hooks";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	getParametersStore,
 	useParametersContext,
@@ -16,6 +17,7 @@ export interface GenerateSectionProps {
 const MIN_START_YEAR = 2000;
 
 export function GenerateSection(props: GenerateSectionProps) {
+	const { t } = useTranslation();
 	const { ok, sourceVariant = "modal" } = props;
 	const initialStartYear =
 		getParametersStore().getInitialState().inputs.startYear;
@@ -92,13 +94,15 @@ export function GenerateSection(props: GenerateSectionProps) {
 				onChange={handleSourceChange}
 				variant={sourceVariant}
 				error={
-					ok || modified ? "" : `Unable to load contributions for "${name}".`
+					ok || modified
+						? ""
+						: t("source.errors.unableToLoadContributions", { name })
 				}
 			/>
 			<Group grow>
 				<NumberInput
-					label="Start Year"
-					placeholder="Start Year"
+					label={t("inputs.startYear")}
+					placeholder={t("inputs.startYear")}
 					min={MIN_START_YEAR}
 					max={new Date().getFullYear()}
 					allowNegative={false}
@@ -122,8 +126,8 @@ export function GenerateSection(props: GenerateSectionProps) {
 					onChange={setStartYear}
 				/>
 				<NumberInput
-					label="End Year"
-					placeholder="End Year"
+					label={t("inputs.endYear")}
+					placeholder={t("inputs.endYear")}
 					min={MIN_START_YEAR}
 					max={new Date().getFullYear()}
 					allowNegative={false}
@@ -156,7 +160,7 @@ export function GenerateSection(props: GenerateSectionProps) {
 				size="xs"
 				onClick={() => applyInputs()}
 			>
-				Generate
+				{t("actions.generate")}
 			</Button>
 		</Stack>
 	);

@@ -1,13 +1,15 @@
 import { Card, Text } from "@mantine/core";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useTowerStore } from "../stores/tower";
 
 export function HoverCard() {
+	const { t, i18n } = useTranslation();
 	const position = useTowerStore((state) => state.position);
 	const target = useTowerStore((state) => state.target);
 	const date =
 		target !== null
-			? new Date(target.date).toLocaleDateString(undefined, {
+			? new Date(target.date).toLocaleDateString(i18n.language, {
 					dateStyle: "short",
 				})
 			: "";
@@ -36,7 +38,7 @@ export function HoverCard() {
 			<Card>
 				<Text fw="bold">{date}</Text>
 				<Text size="sm" c="dimmed">
-					Contributions: {contributions}
+					{t("hover.contributions", { count: contributions })}
 				</Text>
 			</Card>
 		</div>

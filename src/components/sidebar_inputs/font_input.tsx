@@ -1,5 +1,6 @@
 import { Loader, Select } from "@mantine/core";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { loadTTF } from "../../hooks/useTTFLoader";
 import { DEFAULT_FONT_SELECTION, useFontStore } from "../../stores/fonts";
 import { useParametersContext } from "../../stores/parameters";
@@ -7,6 +8,7 @@ import { useParametersContext } from "../../stores/parameters";
 // TODO: re-implement font loading using ttf format
 
 export function FontInput() {
+	const { t } = useTranslation();
 	const setInputs = useParametersContext((state) => state.setInputs);
 	const [fontLoadFailed, setFontLoadFailed] = useState(false);
 	const [loadingFont, setLoadingFont] = useState<string | null>(null);
@@ -16,7 +18,7 @@ export function FontInput() {
 		<div style={{ display: "flex", columnGap: "0.5rem" }}>
 			<Select
 				style={{ flex: 1 }}
-				label="Font"
+				label={t("inputs.font")}
 				data={Object.keys(fonts)}
 				defaultValue={DEFAULT_FONT_SELECTION}
 				allowDeselect={false}
@@ -41,7 +43,7 @@ export function FontInput() {
 						setLoadingFont(null);
 					}
 				}}
-				error={fontLoadFailed ? "Unable to load font" : ""}
+				error={fontLoadFailed ? t("errors.fontLoad") : ""}
 			/>
 			{/* <Stack gap={0}>
 				<wbr />

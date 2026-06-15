@@ -1,7 +1,9 @@
 import { TextInput } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 import { useParametersContext } from "../../stores/parameters";
 
 export function UsernameOverrideInput() {
+	const { t } = useTranslation();
 	const nameOverride = useParametersContext(
 		(state) => state.inputs.nameOverride,
 	);
@@ -9,9 +11,9 @@ export function UsernameOverrideInput() {
 
 	return (
 		<TextInput
-			label="Username Override"
+			label={t("inputs.usernameOverride")}
 			value={nameOverride}
-			placeholder="Username Override"
+			placeholder={t("inputs.usernameOverride")}
 			onChange={(e) => setInputs({ nameOverride: e.target.value })}
 		/>
 	);

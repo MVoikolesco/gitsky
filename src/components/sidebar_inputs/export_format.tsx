@@ -1,4 +1,5 @@
 import { Select } from "@mantine/core";
+import { useTranslation } from "react-i18next";
 import {
 	getParametersStore,
 	useParametersContext,
@@ -6,12 +7,13 @@ import {
 import { ExportFormat } from "../../three/export";
 
 export function ExportFormatInput() {
+	const { t } = useTranslation();
 	const DEFAULT_VALUE =
 		getParametersStore().getInitialState().inputs.exportFormat;
 	const setInputs = useParametersContext((state) => state.setInputs);
 	return (
 		<Select
-			label="Format"
+			label={t("inputs.format")}
 			data={[
 				{
 					value: ExportFormat.ThreeMF,

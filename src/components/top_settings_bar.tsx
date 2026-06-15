@@ -21,6 +21,7 @@ import {
 	IconTextSize,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { useParametersContext } from "../stores/parameters";
 import classes from "../styles/top_settings_bar.module.css";
 import { BasePaddingInput } from "./sidebar_inputs/base_padding";
@@ -101,8 +102,9 @@ function SettingsMenu({
 }
 
 function SourceSummary({ ok }: TopSettingsBarProps) {
+	const { t } = useTranslation();
 	const inputs = useParametersContext((state) => state.inputs);
-	const source = inputs.name.trim() || "Choose a source";
+	const source = inputs.name.trim() || t("nav.chooseSource");
 	const years = `${inputs.startYear} - ${inputs.endYear}`;
 
 	return (
@@ -114,10 +116,10 @@ function SourceSummary({ ok }: TopSettingsBarProps) {
 					</ThemeIcon>
 					<div className={classes.brandText}>
 						<Text className="mona-sans-wide" tt="uppercase" size="xs" truncate>
-							{import.meta.env.PUBLIC_APP_NAME}
+							{t("app.name")}
 						</Text>
 						<Text size="xs" c="dimmed" truncate>
-							Model studio
+							{t("nav.modelStudio")}
 						</Text>
 					</div>
 					<div className={classes.currentState}>
@@ -146,10 +148,10 @@ function SourceSummary({ ok }: TopSettingsBarProps) {
 					</ThemeIcon>
 					<div>
 						<Text className="mona-sans-wide" tt="uppercase" size="xs">
-							Source
+							{t("nav.source")}
 						</Text>
 						<Text size="xs" c="dimmed">
-							User and contribution years
+							{t("nav.sourceDescription")}
 						</Text>
 					</div>
 				</Group>
@@ -162,10 +164,12 @@ function SourceSummary({ ok }: TopSettingsBarProps) {
 }
 
 function StudioPanel() {
+	const { t } = useTranslation();
+
 	return (
 		<SettingsMenu
-			description="Text, model, material & file"
-			label="Studio"
+			description={t("nav.studioDescription")}
+			label={t("nav.studio")}
 			icon={<IconLayoutDashboard size={16} stroke={1.8} />}
 			tone="studio"
 			width={620}
@@ -177,16 +181,16 @@ function StudioPanel() {
 			>
 				<Tabs.List grow>
 					<Tabs.Tab value="text" leftSection={<IconTextSize size={14} />}>
-						Text
+						{t("tabs.text")}
 					</Tabs.Tab>
 					<Tabs.Tab value="model" leftSection={<IconCube size={14} />}>
-						Model
+						{t("tabs.model")}
 					</Tabs.Tab>
 					<Tabs.Tab value="render" leftSection={<IconPaint size={14} />}>
-						Render
+						{t("tabs.render")}
 					</Tabs.Tab>
 					<Tabs.Tab value="export" leftSection={<IconDownload size={14} />}>
-						Export
+						{t("tabs.export")}
 					</Tabs.Tab>
 				</Tabs.List>
 
@@ -223,6 +227,8 @@ function StudioPanel() {
 }
 
 export function TopSettingsBar({ ok }: TopSettingsBarProps) {
+	const { t } = useTranslation();
+
 	return (
 		<div className={classes.wrap}>
 			<Paper className={classes.bar}>
@@ -240,7 +246,7 @@ export function TopSettingsBar({ ok }: TopSettingsBarProps) {
 							popoverPosition="bottom"
 						/>
 						<ExportButton className={classes.downloadButton} />
-						<Tooltip label="View on Github">
+						<Tooltip label={t("common.viewOnGithub")}>
 							<ActionIcon
 								component="a"
 								href="https://github.com/MVoikolesco/gitsky"
@@ -248,7 +254,7 @@ export function TopSettingsBar({ ok }: TopSettingsBarProps) {
 								rel="noreferrer"
 								variant="default"
 								size={38}
-								aria-label="View on Github"
+								aria-label={t("common.viewOnGithub")}
 								className={classes.githubButton}
 							>
 								<IconBrandGithubFilled size={16} />
