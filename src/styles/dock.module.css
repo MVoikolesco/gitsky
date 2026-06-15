@@ -2,5 +2,31 @@
 	position: absolute;
 	bottom: calc(100vh - 100dvh);
 	left: 50%;
+	padding: 5px;
+	border-color: rgba(223, 239, 255, 0.18);
+	border-radius: 16px;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42px),
+		rgba(28, 40, 58, 0.9);
+	box-shadow:
+		0 18px 44px rgba(0, 0, 0, 0.34),
+		0 1px 0 rgba(255, 255, 255, 0.08) inset;
+	backdrop-filter: blur(18px) saturate(1.12);
 	transform: translateX(-50%);
+}
+
+.dock :global(.mantine-ActionIcon-root) {
+	width: 36px;
+	height: 36px;
+	border-radius: 12px;
+	color: #d7ebff;
+}
+
+.dock :global(.mantine-ActionIcon-root:hover) {
+	background: rgba(127, 183, 255, 0.14);
+}
+
+.dock :global(.mantine-ActionIcon-root[data-variant="filled"]) {
+	background: #7fb7ff;
+	color: #102033;
 }
