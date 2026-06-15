@@ -16,9 +16,7 @@ export const Route = createFileRoute("/")({
 
 export function Editor() {
 	const initialFromUrl = getInitialInputsFromUrl(window.location.href);
-	const store = useRef(
-		createParametersStore({ name: initialFromUrl.name ?? "", ...initialFromUrl }),
-	).current;
+	const store = useRef(createParametersStore(initialFromUrl)).current;
 
 	return (
 		<ParametersContext.Provider value={store}>

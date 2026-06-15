@@ -2,6 +2,7 @@ import type { ResultOf } from "gql.tada";
 import { useEffect, useState } from "react";
 import type { OperationResult } from "urql";
 import { client } from "../api/client";
+import { buildMockContributionCalendar } from "../api/mockCalendar";
 import { ContributionQuery } from "../api/query";
 import type { ContributionWeeks } from "../api/types";
 import { useGiteaStore } from "../stores/gitea";
@@ -54,6 +55,16 @@ const doRangeQuery = async (props: ExtendedQueryProps) => {
 	}
 };
 
+const buildMockYears = (start: number, end: number): ContributionWeeks[] => {
+	const years: ContributionWeeks[] = [];
+	for (let year = start; year <= end; year++) {
+		years.push(
+			buildMockContributionCalendar(year).weeks as unknown as ContributionWeeks,
+		);
+	}
+	return years;
+};
+
 export const useExtendedQuery = (
 	props: ExtendedQueryProps,
 ): ExtendedQueryResult => {
@@ -73,13 +84,22 @@ export const useExtendedQuery = (
 			for (let year = props.start; year <= props.end; year++) {
 				const calendar = giteaCalendars[year];
 				if (calendar) {
-					giteaYears.push(calendar.weeks as ContributionWeeks);
+					giteaYears.push(calendar.weeks as unknown as ContributionWeeks);
+				} else {
+					giteaYears.push(
+						buildMockContributionCalendar(year)
+							.weeks as unknown as ContributionWeeks,
+					);
 				}
 			}
 
 			setFetching(false);
-			setYears(giteaYears.length > 0 ? giteaYears : [[]]);
-			setOk(giteaYears.length > 0);
+			setYears(
+				giteaYears.length > 0
+					? giteaYears
+					: buildMockYears(props.start, props.end),
+			);
+			setOk(true);
 			return;
 		}
 
@@ -88,9 +108,11 @@ export const useExtendedQuery = (
 		setYears([[]]);
 		doRangeQuery(props)
 			.then((result) => {
-				setYears(result);
+				const years =
+					result.length > 0 ? result : buildMockYears(props.start, props.end);
+				setYears(years);
 				if (result.length === 0) {
-					setOk(false);
+					setOk(true);
 				}
 			})
 			.catch(console.error)
