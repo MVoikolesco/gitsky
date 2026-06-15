@@ -32,7 +32,7 @@ export function SkylineControls({
 
 	return (
 		<Portal target="#skyline-canvas">
-			<Card className={classes.dock} p={5} withBorder>
+			<Card className={classes.dock} p={0} withBorder>
 				<Group gap={5}>
 					{isMobile && onOpenDrawer && (
 						<Tooltip label="Edit Settings">
