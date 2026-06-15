@@ -1,25 +1,17 @@
-import { AppShell, Drawer, LoadingOverlay, Text } from "@mantine/core";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { AppShell, LoadingOverlay } from "@mantine/core";
 import { useExtendedQuery } from "../hooks/useExtendedQuery";
 import { useUrlStateSync } from "../hooks/useUrlState";
 import { useParametersContext } from "../stores/parameters";
-import { MQ } from "../theme/media";
 import { Skyline } from "../three/skyline";
 import { HoverCard } from "./hover_card";
-import { Sidebar } from "./sidebar";
+import { ModelContextMenu } from "./model_context_menu";
 import { SkylineControls } from "./skyline_controls";
+import { TopSettingsBar } from "./top_settings_bar";
 
 export function EditorAppShell() {
 	const name = useParametersContext((state) => state.inputs.name);
 	const start = useParametersContext((state) => state.inputs.startYear);
 	const end = useParametersContext((state) => state.inputs.endYear);
-
-	const [mobileOpened] = useDisclosure();
-	const [desktopOpened] = useDisclosure(true);
-	const [drawerOpened, { open: openDrawer, close: closeDrawer }] =
-		useDisclosure(false);
-
-	const isMobile = useMediaQuery(MQ.sm);
 
 	const { years, fetching, ok } = useExtendedQuery({
 		name,
@@ -30,25 +22,14 @@ export function EditorAppShell() {
 	useUrlStateSync();
 
 	return (
-		<AppShell
-			header={{ height: 0 }}
-			padding={"xs"}
-			navbar={{
-				width: 320,
-				breakpoint: "sm",
-				collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
-			}}
-			withBorder={false}
-		>
-			<AppShell.Navbar p="md" pr={0}>
-				<Sidebar ok={ok} />
-			</AppShell.Navbar>
-			<AppShell.Main style={{ height: "100vh" }}>
+		<AppShell header={{ height: 0 }} padding={0} withBorder={false}>
+			<AppShell.Main className="editor-stage" style={{ height: "100vh" }}>
 				<LoadingOverlay
 					visible={fetching}
 					zIndex={1000}
 					overlayProps={{ radius: "sm", blur: 2 }}
 				/>
+				<div className="scene-backdrop" />
 				<Skyline years={years} />
 				<div
 					style={{
@@ -57,32 +38,15 @@ export function EditorAppShell() {
 						right: 0,
 						top: 0,
 						bottom: 0,
+						zIndex: 2,
 						pointerEvents: "none",
 					}}
 				>
 					<HoverCard />
 				</div>
-				<SkylineControls onOpenDrawer={openDrawer} />
-				{isMobile && (
-					<Drawer
-						opened={drawerOpened}
-						onClose={closeDrawer}
-						position="bottom"
-						size="xl"
-						title={
-							<Text
-								flex={1}
-								className="mona-sans-wide"
-								tt="uppercase"
-								size="md"
-							>
-								{import.meta.env.PUBLIC_APP_NAME}
-							</Text>
-						}
-					>
-						<Sidebar fromDrawer ok={ok} />
-					</Drawer>
-				)}
+				<ModelContextMenu />
+				<TopSettingsBar ok={ok} />
+				<SkylineControls />
 			</AppShell.Main>
 		</AppShell>
 	);
