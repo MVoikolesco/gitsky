@@ -1,12 +1,16 @@
 import { AppShell, LoadingOverlay } from "@mantine/core";
+import { lazy, Suspense } from "react";
 import { useExtendedQuery } from "../hooks/useExtendedQuery";
 import { useUrlStateSync } from "../hooks/useUrlState";
 import { useParametersContext } from "../stores/parameters";
-import { Skyline } from "../three/skyline";
 import { HoverCard } from "./hover_card";
 import { ModelContextMenu } from "./model_context_menu";
 import { SkylineControls } from "./skyline_controls";
 import { TopSettingsBar } from "./top_settings_bar";
+
+const Skyline = lazy(() =>
+	import("../three/skyline").then(({ Skyline }) => ({ default: Skyline })),
+);
 
 export function EditorAppShell() {
 	const name = useParametersContext((state) => state.inputs.name);
@@ -23,14 +27,16 @@ export function EditorAppShell() {
 
 	return (
 		<AppShell header={{ height: 0 }} padding={0} withBorder={false}>
-			<AppShell.Main className="editor-stage" style={{ height: "100vh" }}>
+			<AppShell.Main className="editor-stage" style={{ height: "100dvh" }}>
 				<LoadingOverlay
 					visible={fetching}
 					zIndex={1000}
 					overlayProps={{ radius: "sm", blur: 2 }}
 				/>
 				<div className="scene-backdrop" />
-				<Skyline years={years} />
+				<Suspense fallback={null}>
+					<Skyline years={years} />
+				</Suspense>
 				<div
 					style={{
 						position: "absolute",

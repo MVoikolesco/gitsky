@@ -1,6 +1,6 @@
 .dock {
 	position: absolute;
-	bottom: calc(100vh - 100dvh);
+	bottom: max(8px, calc(env(safe-area-inset-bottom) + 100vh - 100dvh));
 	left: 50%;
 	padding: 5px;
 	border-color: rgba(223, 239, 255, 0.18);
