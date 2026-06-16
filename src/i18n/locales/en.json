@@ -12,7 +12,9 @@
 	},
 	"nav": {
 		"chooseSource": "Choose a source",
+		"closeMenu": "Close menu",
 		"modelStudio": "Model studio",
+		"openMenu": "Open menu",
 		"source": "Source",
 		"sourceDescription": "User and contribution years",
 		"studio": "Studio",

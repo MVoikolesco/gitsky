@@ -40,6 +40,12 @@
 	min-height: 58px;
 }
 
+.mobileHeader,
+.mobilePanel,
+.mobileScrim {
+	display: none;
+}
+
 .brand {
 	display: flex;
 	align-items: center;
@@ -319,51 +325,213 @@
 		width: min(calc(100vw - 16px), 1120px);
 	}
 
+	.wrap[data-mobile-menu-open="true"] {
+		z-index: 40;
+	}
+
+	.mobileScrim {
+		position: fixed;
+		top: calc(-1 * max(10px, env(safe-area-inset-top)));
+		left: 50%;
+		z-index: -1;
+		display: block;
+		width: 100vw;
+		height: 100dvh;
+		padding: 0;
+		border: 0;
+		background: rgba(3, 9, 16, 0.48);
+		opacity: 0;
+		transform: translateX(-50%);
+		pointer-events: none;
+		transition: opacity 220ms ease;
+	}
+
+	.mobileScrim[data-opened="true"] {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
 	.bar {
+		position: relative;
+		z-index: 2;
 		padding: 6px;
+		border-radius: 18px;
 	}
 
 	.inner {
+		display: none;
+	}
+
+	.mobileHeader {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 54px;
+		gap: 10px;
+	}
+
+	.mobileBrand {
+		display: grid;
 		grid-template-columns: auto minmax(0, 1fr) auto;
+		align-items: center;
+		min-width: 0;
+		flex: 1;
+		gap: 9px;
+		padding-inline: 4px 0;
 	}
 
-	.brand {
-		min-width: 52px;
-		max-width: 52px;
-		padding-right: 6px;
+	.mobileBrandText {
+		min-width: 0;
+		line-height: 1.1;
 	}
 
-	.brandText,
-	.currentState,
-	.menuDescription {
-		display: none;
+	.mobileYears {
+		max-width: 92px;
+		padding: 7px 9px;
+		border: 1px solid rgba(255, 255, 255, 0.075);
+		border-radius: 12px;
+		background: rgba(255, 255, 255, 0.07);
+		color: #c9d9e8;
+		line-height: 1;
+		white-space: nowrap;
 	}
 
-	.menuButton {
-		min-width: auto;
-		width: 48px;
-		padding-inline: 8px;
+	.hamburgerButton {
+		flex: 0 0 auto;
+		border: 1px solid rgba(255, 255, 255, 0.075);
+		border-radius: 14px;
+		background: rgba(127, 183, 255, 0.12);
+		color: #eaf6ff;
+		transition:
+			background-color 180ms ease,
+			border-color 180ms ease,
+			transform 180ms ease;
 	}
 
-	.menuCopy {
-		display: none;
+	.hamburgerButton:hover {
+		border-color: rgba(127, 183, 255, 0.28);
+		background: rgba(127, 183, 255, 0.18);
 	}
 
-	.menus,
-	.actions {
-		min-height: 52px;
-		padding: 4px;
+	.hamburgerButton[data-opened="true"] {
+		border-color: rgba(118, 215, 255, 0.28);
+		background: rgba(118, 215, 255, 0.18);
+		transform: rotate(90deg);
 	}
 
-	.shareButton,
-	.downloadButton {
-		width: 44px;
-		height: 44px;
-		padding-inline: 0;
+	.hamburgerIcon {
+		position: relative;
+		display: grid;
+		width: 22px;
+		height: 22px;
+		place-items: center;
 	}
 
-	.downloadButton :global(.mantine-Button-inner) {
-		width: 20px;
-		overflow: hidden;
+	.hamburgerOpenIcon,
+	.hamburgerCloseIcon {
+		position: absolute;
+		transition:
+			opacity 180ms ease,
+			transform 220ms ease;
+	}
+
+	.hamburgerCloseIcon {
+		opacity: 0;
+		transform: scale(0.72) rotate(-90deg);
+	}
+
+	.hamburgerButton[data-opened="true"] .hamburgerOpenIcon {
+		opacity: 0;
+		transform: scale(0.72) rotate(90deg);
+	}
+
+	.hamburgerButton[data-opened="true"] .hamburgerCloseIcon {
+		opacity: 1;
+		transform: scale(1) rotate(-90deg);
+	}
+
+	.mobilePanel {
+		position: relative;
+		z-index: 1;
+		display: block;
+		max-height: calc(100dvh - 94px);
+		margin-top: 8px;
+		padding: 12px;
+		border: 1px solid rgba(223, 239, 255, 0.16);
+		border-radius: 18px;
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 92px),
+			rgba(18, 26, 38, 0.94);
+		box-shadow:
+			0 24px 70px rgba(0, 0, 0, 0.46),
+			0 1px 0 rgba(255, 255, 255, 0.08) inset;
+		backdrop-filter: blur(24px) saturate(1.16);
+		opacity: 0;
+		transform: translateY(-12px) scale(0.98);
+		transform-origin: top center;
+		pointer-events: none;
+		transition:
+			opacity 220ms ease,
+			transform 240ms cubic-bezier(0.2, 0.82, 0.2, 1);
+	}
+
+	.mobilePanel[data-opened="true"] {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		pointer-events: auto;
+	}
+
+	.mobileScroll {
+		padding-right: 4px;
+	}
+
+	.mobileSection {
+		display: grid;
+		gap: 12px;
+		padding: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.075);
+		border-radius: 16px;
+		background: rgba(255, 255, 255, 0.055);
+	}
+
+	.mobileSectionHeader {
+		min-height: 34px;
+	}
+
+	.mobileDivider {
+		border-color: rgba(255, 255, 255, 0.08);
+	}
+
+	.mobileActions {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 8px;
+	}
+
+	.mobileShareButton,
+	.mobileDownloadButton,
+	.mobileGithubButton {
+		min-height: 46px;
+		border-radius: 14px;
+	}
+
+	.mobileGithubButton {
+		grid-column: 1 / -1;
+		border-color: rgba(255, 255, 255, 0.09);
+		background-color: rgba(255, 255, 255, 0.065);
+		color: #eef7ff;
+	}
+
+	.mobileShareButton {
+		background-color: rgba(127, 183, 255, 0.14);
+		color: #d7ebff;
+	}
+
+	.mobileDownloadButton {
+		background: #7fb7ff;
+		color: #102033;
+		box-shadow:
+			0 10px 26px rgba(127, 183, 255, 0.22),
+			0 1px 0 rgba(255, 255, 255, 0.3) inset;
 	}
 }

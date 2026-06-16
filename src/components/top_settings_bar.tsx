@@ -1,5 +1,8 @@
 import {
+	Accordion,
 	ActionIcon,
+	Button,
+	Divider,
 	Group,
 	Paper,
 	Popover,
@@ -17,12 +20,15 @@ import {
 	IconCube,
 	IconDownload,
 	IconLayoutDashboard,
+	IconMenu2,
 	IconPaint,
 	IconTextSize,
+	IconX,
 } from "@tabler/icons-react";
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParametersContext } from "../stores/parameters";
+import accordionClasses from "../styles/accordion.module.css";
 import classes from "../styles/top_settings_bar.module.css";
 import { BasePaddingInput } from "./sidebar_inputs/base_padding";
 import { BaseShapeInput } from "./sidebar_inputs/base_shape";
@@ -49,6 +55,15 @@ interface SettingsMenuProps {
 	label: string;
 	tone: "source" | "studio";
 	width?: number;
+}
+
+function useSourceSummaryText() {
+	const { t } = useTranslation();
+	const inputs = useParametersContext((state) => state.inputs);
+	const source = inputs.name.trim() || t("nav.chooseSource");
+	const years = `${inputs.startYear} - ${inputs.endYear}`;
+
+	return { source, years };
 }
 
 function SettingsMenu({
@@ -103,9 +118,7 @@ function SettingsMenu({
 
 function SourceSummary({ ok }: TopSettingsBarProps) {
 	const { t } = useTranslation();
-	const inputs = useParametersContext((state) => state.inputs);
-	const source = inputs.name.trim() || t("nav.chooseSource");
-	const years = `${inputs.startYear} - ${inputs.endYear}`;
+	const { source, years } = useSourceSummaryText();
 
 	return (
 		<Popover position="bottom" offset={10} shadow="xl" withArrow withinPortal>
@@ -160,6 +173,195 @@ function SourceSummary({ ok }: TopSettingsBarProps) {
 				</ScrollArea.Autosize>
 			</Popover.Dropdown>
 		</Popover>
+	);
+}
+
+function MobileHeader({
+	opened,
+	onToggle,
+}: {
+	opened: boolean;
+	onToggle: () => void;
+}) {
+	const { t } = useTranslation();
+	const { source, years } = useSourceSummaryText();
+
+	return (
+		<div className={classes.mobileHeader}>
+			<div className={classes.mobileBrand}>
+				<ThemeIcon className={classes.brandMark} size={36}>
+					<img className={classes.brandLogo} src="/icon.svg" alt="" />
+				</ThemeIcon>
+				<div className={classes.mobileBrandText}>
+					<Text className="mona-sans-wide" tt="uppercase" size="xs" truncate>
+						{t("app.name")}
+					</Text>
+					<Text size="xs" c="dimmed" truncate>
+						{source}
+					</Text>
+				</div>
+				<div className={classes.mobileYears}>
+					<Text size="xs">{years}</Text>
+				</div>
+			</div>
+			<Tooltip label={opened ? t("nav.closeMenu") : t("nav.openMenu")}>
+				<ActionIcon
+					className={classes.hamburgerButton}
+					data-opened={opened}
+					variant="subtle"
+					size={44}
+					aria-label={opened ? t("nav.closeMenu") : t("nav.openMenu")}
+					aria-expanded={opened}
+					onClick={onToggle}
+				>
+					<span className={classes.hamburgerIcon}>
+						<IconMenu2 className={classes.hamburgerOpenIcon} size={21} />
+						<IconX className={classes.hamburgerCloseIcon} size={21} />
+					</span>
+				</ActionIcon>
+			</Tooltip>
+		</div>
+	);
+}
+
+function MobileMenuPanel({
+	ok,
+	opened,
+}: TopSettingsBarProps & { opened: boolean }) {
+	const { t } = useTranslation();
+
+	return (
+		<div className={classes.mobilePanel} data-opened={opened}>
+			<ScrollArea.Autosize
+				className={classes.mobileScroll}
+				mah="calc(100dvh - 108px)"
+				offsetScrollbars
+				type="hover"
+			>
+				<Stack gap="md">
+					<section className={classes.mobileSection}>
+						<Group
+							className={classes.mobileSectionHeader}
+							gap={8}
+							wrap="nowrap"
+						>
+							<ThemeIcon
+								className={classes.dropdownIcon}
+								data-tone="source"
+								size="sm"
+							>
+								<IconCube size={16} stroke={1.8} />
+							</ThemeIcon>
+							<div>
+								<Text className="mona-sans-wide" tt="uppercase" size="xs">
+									{t("nav.source")}
+								</Text>
+								<Text size="xs" c="dimmed">
+									{t("nav.sourceDescription")}
+								</Text>
+							</div>
+						</Group>
+						<GenerateSection ok={ok} login="" sourceVariant="inline" />
+					</section>
+
+					<section className={classes.mobileSection}>
+						<Group
+							className={classes.mobileSectionHeader}
+							gap={8}
+							wrap="nowrap"
+						>
+							<ThemeIcon
+								className={classes.dropdownIcon}
+								data-tone="studio"
+								size="sm"
+							>
+								<IconLayoutDashboard size={16} stroke={1.8} />
+							</ThemeIcon>
+							<div>
+								<Text className="mona-sans-wide" tt="uppercase" size="xs">
+									{t("nav.studio")}
+								</Text>
+								<Text size="xs" c="dimmed">
+									{t("nav.studioDescription")}
+								</Text>
+							</div>
+						</Group>
+
+						<Accordion
+							classNames={accordionClasses}
+							defaultValue="text_options"
+							variant="contained"
+						>
+							<Accordion.Item value="text_options">
+								<Accordion.Control icon={<IconTextSize stroke={1} size={20} />}>
+									{t("tabs.text")}
+								</Accordion.Control>
+								<Accordion.Panel>
+									<Stack gap="sm">
+										<UsernameOverrideInput />
+										<FontInput />
+										<InsetTextCheckbox />
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+							<Accordion.Item value="model_options">
+								<Accordion.Control icon={<IconCube stroke={1} size={20} />}>
+									{t("tabs.model")}
+								</Accordion.Control>
+								<Accordion.Panel>
+									<Stack gap="sm">
+										<TowerDampeningInput />
+										<BasePaddingInput />
+										<BaseShapeInput />
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+							<Accordion.Item value="display_options">
+								<Accordion.Control icon={<IconPaint stroke={1} size={20} />}>
+									{t("tabs.render")}
+								</Accordion.Control>
+								<Accordion.Panel>
+									<RenderColorInput />
+								</Accordion.Panel>
+							</Accordion.Item>
+							<Accordion.Item value="export_options">
+								<Accordion.Control icon={<IconDownload stroke={1} size={20} />}>
+									{t("tabs.export")}
+								</Accordion.Control>
+								<Accordion.Panel>
+									<Stack gap="sm">
+										<FilenameInput />
+										<ExportFormatInput />
+										<ScaleInput />
+									</Stack>
+								</Accordion.Panel>
+							</Accordion.Item>
+						</Accordion>
+					</section>
+
+					<Divider className={classes.mobileDivider} />
+
+					<div className={classes.mobileActions}>
+						<ShareButton
+							className={classes.mobileShareButton}
+							popoverPosition="top"
+						/>
+						<ExportButton className={classes.mobileDownloadButton} />
+						<Button
+							className={classes.mobileGithubButton}
+							component="a"
+							href="https://github.com/MVoikolesco/gitsky"
+							target="_blank"
+							rel="noreferrer"
+							variant="default"
+							leftSection={<IconBrandGithubFilled size={16} />}
+						>
+							{t("common.viewOnGithub")}
+						</Button>
+					</div>
+				</Stack>
+			</ScrollArea.Autosize>
+		</div>
 	);
 }
 
@@ -228,9 +430,31 @@ function StudioPanel() {
 
 export function TopSettingsBar({ ok }: TopSettingsBarProps) {
 	const { t } = useTranslation();
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+	useEffect(() => {
+		if (!mobileMenuOpen) return;
+
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				setMobileMenuOpen(false);
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [mobileMenuOpen]);
 
 	return (
-		<div className={classes.wrap}>
+		<div className={classes.wrap} data-mobile-menu-open={mobileMenuOpen}>
+			<button
+				className={classes.mobileScrim}
+				data-opened={mobileMenuOpen}
+				type="button"
+				aria-label={t("nav.closeMenu")}
+				onClick={() => setMobileMenuOpen(false)}
+			/>
 			<Paper className={classes.bar}>
 				<Group className={classes.inner} gap="xs" wrap="nowrap">
 					<SourceSummary ok={ok} />
@@ -262,7 +486,12 @@ export function TopSettingsBar({ ok }: TopSettingsBarProps) {
 						</Tooltip>
 					</Group>
 				</Group>
+				<MobileHeader
+					opened={mobileMenuOpen}
+					onToggle={() => setMobileMenuOpen((opened) => !opened)}
+				/>
 			</Paper>
+			<MobileMenuPanel ok={ok} opened={mobileMenuOpen} />
 		</div>
 	);
 }
