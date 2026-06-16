@@ -44,9 +44,39 @@
 	},
 	"actions": {
 		"download": "Download",
+		"export": "Exportar",
 		"generate": "Gerar",
 		"share": "Compartilhar",
 		"uploadJson": "Enviar JSON"
+	},
+	"export": {
+		"title": "Exportar modelo 3D",
+		"cancel": "Cancelar",
+		"formats": {
+			"3mf": "Impressao 3D com material e cor",
+			"stl": "Geometria simples para fatiadores",
+			"glb": "Arquivo 3D binario para visualizacao e apps",
+			"gltf": "Cena 3D em JSON para edicao e troca",
+			"obj": "Malha aberta para modeladores 3D"
+		},
+		"use": {
+			"printing": "Impressao",
+			"exchange": "Troca",
+			"preview": "Preview"
+		},
+		"badges": {
+			"binary": "Binario",
+			"colors": "Com cores",
+			"geometry": "Geometria",
+			"text": "Texto"
+		},
+		"details": {
+			"dimensions": "Dimensoes",
+			"file": "Arquivo",
+			"meshes": "Malhas",
+			"scale": "Escala",
+			"triangles": "Triangulos"
+		}
 	},
 	"source": {
 		"bitbucketDescription": "Commits e pull requests do Bitbucket",

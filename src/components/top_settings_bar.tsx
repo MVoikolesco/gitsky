@@ -440,7 +440,6 @@ function StudioPanel() {
 				<Tabs.Panel value="export" pt="md">
 					<Stack gap="sm">
 						<FilenameInput />
-						<ExportFormatInput />
 						<ScaleInput />
 					</Stack>
 				</Tabs.Panel>
