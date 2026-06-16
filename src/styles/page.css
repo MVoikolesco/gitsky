@@ -11,6 +11,17 @@ body,
 	padding: 0;
 }
 
+html {
+	background: #071827;
+	overflow: hidden;
+}
+
+body {
+	min-width: 320px;
+	overflow: hidden;
+	overscroll-behavior: none;
+}
+
 .mona-sans-wide {
 	font-family: "Mona Sans", sans-serif;
 	font-optical-sizing: auto;

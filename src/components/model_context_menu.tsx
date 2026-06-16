@@ -91,13 +91,25 @@ export function ModelContextMenu() {
 	}
 
 	const isBase = target === "base";
+	const viewportWidth = window.innerWidth;
+	const viewportHeight = window.innerHeight;
+	const menuWidth = Math.min(340, Math.max(0, viewportWidth - 24));
+	const menuHeight = Math.min(520, Math.max(0, viewportHeight - 24));
+	const left = Math.max(
+		12,
+		Math.min(position.x + 16, viewportWidth - menuWidth - 12),
+	);
+	const top = Math.max(
+		12,
+		Math.min(position.y + 16, viewportHeight - menuHeight - 12),
+	);
 
 	return (
 		<Paper
 			className={classes.menu}
 			style={{
-				left: `min(${position.x + 16}px, calc(100vw - 360px))`,
-				top: `min(${position.y + 16}px, calc(100vh - 520px))`,
+				left,
+				top,
 			}}
 		>
 			<Group justify="space-between" align="flex-start" mb="md" wrap="nowrap">

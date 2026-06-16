@@ -25,14 +25,13 @@ import {
 	IconTextSize,
 	IconX,
 } from "@tabler/icons-react";
-import { type ReactNode, useEffect, useState } from "react";
+import { lazy, type ReactNode, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParametersContext } from "../stores/parameters";
 import accordionClasses from "../styles/accordion.module.css";
 import classes from "../styles/top_settings_bar.module.css";
 import { BasePaddingInput } from "./sidebar_inputs/base_padding";
 import { BaseShapeInput } from "./sidebar_inputs/base_shape";
-import { ExportButton } from "./sidebar_inputs/export";
 import { ExportFormatInput } from "./sidebar_inputs/export_format";
 import { FilenameInput } from "./sidebar_inputs/filename";
 import { FontInput } from "./sidebar_inputs/font_input";
@@ -43,6 +42,12 @@ import { ScaleInput } from "./sidebar_inputs/scale";
 import { ShareButton } from "./sidebar_inputs/share";
 import { TowerDampeningInput } from "./sidebar_inputs/tower_dampening";
 import { UsernameOverrideInput } from "./sidebar_inputs/username_override";
+
+const ExportButton = lazy(() =>
+	import("./sidebar_inputs/export").then(({ ExportButton }) => ({
+		default: ExportButton,
+	})),
+);
 
 interface TopSettingsBarProps {
 	ok: boolean;
@@ -64,6 +69,22 @@ function useSourceSummaryText() {
 	const years = `${inputs.startYear} - ${inputs.endYear}`;
 
 	return { source, years };
+}
+
+function DeferredExportButton({ className }: { className?: string }) {
+	const { t } = useTranslation();
+
+	return (
+		<Suspense
+			fallback={
+				<Button className={className} disabled>
+					{t("actions.download")}
+				</Button>
+			}
+		>
+			<ExportButton className={className} />
+		</Suspense>
+	);
 }
 
 function SettingsMenu({
@@ -346,7 +367,7 @@ function MobileMenuPanel({
 							className={classes.mobileShareButton}
 							popoverPosition="top"
 						/>
-						<ExportButton className={classes.mobileDownloadButton} />
+						<DeferredExportButton className={classes.mobileDownloadButton} />
 						<Button
 							className={classes.mobileGithubButton}
 							component="a"
@@ -469,7 +490,7 @@ export function TopSettingsBar({ ok }: TopSettingsBarProps) {
 							compact
 							popoverPosition="bottom"
 						/>
-						<ExportButton className={classes.downloadButton} />
+						<DeferredExportButton className={classes.downloadButton} />
 						<Tooltip label={t("common.viewOnGithub")}>
 							<ActionIcon
 								component="a"
