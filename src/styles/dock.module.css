@@ -1,7 +1,8 @@
 .dock {
-	position: absolute;
-	bottom: max(8px, calc(env(safe-area-inset-bottom) + 100vh - 100dvh));
+	position: fixed;
+	bottom: max(12px, env(safe-area-inset-bottom));
 	left: 50%;
+	z-index: 18;
 	padding: 5px;
 	border-color: rgba(223, 239, 255, 0.18);
 	border-radius: 16px;

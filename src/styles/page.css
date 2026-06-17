@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -19,7 +20,18 @@ html {
 body {
 	min-width: 320px;
 	overflow: hidden;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
 	overscroll-behavior: none;
+	touch-action: manipulation;
+	user-select: none;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+	-webkit-user-select: text;
+	user-select: text;
 }
 
 .mona-sans-wide {
