@@ -1,4 +1,4 @@
-import { ActionIcon, Card, Group, Portal, Tooltip } from "@mantine/core";
+import { ActionIcon, Card, Group, Tooltip } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import {
 	IconCamera,
@@ -32,59 +32,57 @@ export function SkylineControls({
 	const isMobile = useMediaQuery(MQ.sm);
 
 	return (
-		<Portal target="#skyline-canvas">
-			<Card className={classes.dock} p={0} withBorder>
-				<Group gap={5}>
-					{isMobile && onOpenDrawer && (
-						<Tooltip label={t("controls.editSettings")}>
-							<ActionIcon
-								variant="subtle"
-								aria-label={t("controls.openSettings")}
-								onClick={() => onOpenDrawer?.()}
-							>
-								<IconPencil stroke={1} />
-							</ActionIcon>
-						</Tooltip>
-					)}
-					<Tooltip label={t("controls.resetView")}>
+		<Card className={classes.dock} p={0} withBorder>
+			<Group gap={5}>
+				{isMobile && onOpenDrawer && (
+					<Tooltip label={t("controls.editSettings")}>
 						<ActionIcon
 							variant="subtle"
-							aria-label={t("controls.resetView")}
-							onClick={() => resetView()}
+							aria-label={t("controls.openSettings")}
+							onClick={() => onOpenDrawer?.()}
 						>
-							<IconHome stroke={1} />
+							<IconPencil stroke={1} />
 						</ActionIcon>
 					</Tooltip>
-					<Tooltip
-						label={t("controls.enableCamera", {
-							mode: t(`projection.${otherMode}`),
-						})}
+				)}
+				<Tooltip label={t("controls.resetView")}>
+					<ActionIcon
+						variant="subtle"
+						aria-label={t("controls.resetView")}
+						onClick={() => resetView()}
 					>
-						<ActionIcon
-							variant="subtle"
-							aria-label={t("controls.toggleProjectionMode")}
-							onClick={() => toggleProjectionMode()}
-						>
-							<IconCamera stroke={1} />
-						</ActionIcon>
-					</Tooltip>
-					<Tooltip
-						label={
-							autoRotate
-								? t("controls.disableRotation")
-								: t("controls.enableRotation")
-						}
+						<IconHome stroke={1} />
+					</ActionIcon>
+				</Tooltip>
+				<Tooltip
+					label={t("controls.enableCamera", {
+						mode: t(`projection.${otherMode}`),
+					})}
+				>
+					<ActionIcon
+						variant="subtle"
+						aria-label={t("controls.toggleProjectionMode")}
+						onClick={() => toggleProjectionMode()}
 					>
-						<ActionIcon
-							variant={autoRotate ? "filled" : "subtle"}
-							aria-label={t("controls.toggleRotation")}
-							onClick={() => toggleAutoRotation()}
-						>
-							<IconRotate360 stroke={1} />
-						</ActionIcon>
-					</Tooltip>
-				</Group>
-			</Card>
-		</Portal>
+						<IconCamera stroke={1} />
+					</ActionIcon>
+				</Tooltip>
+				<Tooltip
+					label={
+						autoRotate
+							? t("controls.disableRotation")
+							: t("controls.enableRotation")
+					}
+				>
+					<ActionIcon
+						variant={autoRotate ? "filled" : "subtle"}
+						aria-label={t("controls.toggleRotation")}
+						onClick={() => toggleAutoRotation()}
+					>
+						<IconRotate360 stroke={1} />
+					</ActionIcon>
+				</Tooltip>
+			</Group>
+		</Card>
 	);
 }

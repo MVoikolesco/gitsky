@@ -164,6 +164,19 @@
 	}
 }
 
+@media (max-width: 48em) {
+	[data-mantine-color-scheme="light"],
+	[data-mantine-color-scheme="dark"] {
+		.mantine-Input-input,
+		.mantine-Select-input,
+		.mantine-Textarea-input,
+		.mantine-TagsInput-input,
+		.mantine-PillsInput-input {
+			font-size: 16px;
+		}
+	}
+}
+
 /* Select / Combobox */
 .mantine-Combobox-dropdown,
 .mantine-Select-dropdown {
