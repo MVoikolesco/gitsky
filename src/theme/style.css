@@ -164,6 +164,20 @@
 	}
 }
 
+@supports (-webkit-touch-callout: none) {
+	@media (pointer: coarse) {
+		input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+		textarea,
+		select,
+		.mantine-Input-input,
+		.mantine-PillsInput-input,
+		.mantine-TagsInput-input {
+			font-size: 16px;
+			line-height: 24px;
+		}
+	}
+}
+
 /* Select / Combobox */
 .mantine-Combobox-dropdown,
 .mantine-Select-dropdown {
